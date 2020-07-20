@@ -370,6 +370,14 @@ namespace NewModelEx_S1.Controllers.Engineer
 
             ViewBag.ShowModelCustomer = arrayCustomer;
         }
+     
+     public ActionResult Trew(){
+
+string act  = "Iyt";
+
+
+         return View(act);
+     }
 
         public void Classification()
         {
