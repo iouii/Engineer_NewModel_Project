@@ -1,0 +1,184 @@
+﻿@using NewModelEx_S1.Models;
+@{
+    ViewBag.Title = "AddSetPermission";
+}
+
+<html>
+<head>
+    <title>Add New User</title>
+    <style>
+        .card-header {
+            background-color: none;
+            /*text-align: center;*/
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-header alert-light">
+            <h3>ADD SETTING PERMISSION</h3>
+        </div><br /><hr />
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Function Name</label>
+                <div class="col-sm-10" id="inpChknameUser">
+                    <input type="text" class="form-control" id="txtfunName" name="txtfunName" placeholder="Function Name" onchange="checkDataNull(this.id,'inpChknameUser')">
+                    <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Controler Name</label>
+                <div class="col-sm-10" id="inpChklastName">
+                    <input type="text" class="form-control" id="txtControlName" name="txtControlName" placeholder="Controler Name" onchange="checkDataNull(this.id,'inpChklastName')">
+                    <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Main Menu Action</label>
+                <div class="col-sm-10" id="inpChknickname">
+                    <input type="text" class="form-control" id="txtMainAction" name="txtMainAction" placeholder="Action Name" onchange="checkDataNull(this.id,'inpChknickname')">
+                    <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Group MainMenu</label>
+                <div class="col-sm-10">
+                    <select type="text" class="form-control" id="txtManuGrp" name="txtManuGrp" placeholder="">
+                        @if (ViewData["PerMenu"] != null)
+                        {
+                            foreach (var listpermenu in (List<ModelSelPermenu>)ViewData["PerMenu"])
+                            {
+                                <option value="@listpermenu.idPermissionMenu">@listpermenu.namePermissionMenu</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Group Permission</label>
+                <div class="col-sm-10">
+                    <select type="text" class="form-control" id="txtperUser" name="txtperUser">
+                        @if (ViewData["PerUser"] != null)
+                        {
+                            foreach (var listper in (List<ModelSelPer>)ViewData["PerUser"])
+                            {
+                                <option value="@listper.idPermission">@listper.namePermission</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Status Setting</label>
+                <div class="col-sm-10">
+                    <select type="text" class="form-control" id="txtstatus" name="txtstatus" placeholder="">
+                        <option value="Setup">Setup</option>
+                        <option value="Report">Report</option>
+                    </select>
+                </div>
+            </div><br />
+
+            <div class="form-group row float-right">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary" id="btnSave">SAVE</button>
+                    <button class="btn btn-danger" id="btnCancel">CANVEL</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $("#btnCancel").click(function () {
+        location.href = "@Url.Action("SettingPer","Admin")";
+
+    });
+
+        $("#btnSave").click(function () {
+            var tag = document.querySelectorAll("div");
+            var countTag = tag.length, countTagdiv = 0;
+            var arrdiv = [];
+            let countTagp = 0;
+            var chkData = "";
+            for (var j = 0; j < countTag; j++) {
+                chkData = tag[j].id.search("inpChk");
+                //alert(chkData);
+                if ((tag[j].id != "" && chkData >= 0) && chkData != undefined) {
+                    arrdiv[countTagdiv] = tag[j].id;
+                    countTagdiv += 1;
+
+                }
+            }
+            for (var i = 0 ; i < countTagdiv; i++) {
+                var docgetId = document.getElementById(arrdiv[i]);
+                if (docgetId.childNodes[3].innerHTML == "Success") {
+                    countTagp += 1;
+                }
+
+            }
+            if (countTagp == arrdiv.length) {
+                SaveData();
+            }
+
+
+   });
+
+   function SaveData() {
+       var inputTag = $("input[type='text']");
+       var arrData = "";
+       var countData = inputTag.length;
+
+       var selectTag = $("select[type='text']");
+       var arrDatasel = [];
+       var countDataSel = selectTag.length;
+
+       for (var i = 0; i < countData; i++) {
+           arrData += inputTag[i].id + ":'" + inputTag[i].value + "',";
+       }
+       for (var i = 0; i < countDataSel; i++) {
+           arrData += selectTag[i].id + ":'" + selectTag[i].value + "',";
+       }
+       var JsonData = "{" + arrData + "}";
+       //console.log(JsonData);
+
+       $.ajax({
+           type: "POST",
+           url: "/Admin/AddPermission",
+           datatype: "json",
+           data: { jsonData: JsonData },
+           success: function (data) {
+               //alert(data)
+               if (data == "Complete") {
+                   alert("Save data success");
+                   location.href = "@Url.Action("SettingPer","Admin")";
+               }
+
+           }
+       });
+   }
+
+   function checkDataNull(ids, iddiv) {
+
+            if (ids != "" && iddiv != "") {
+                var docgetId = document.getElementById(ids);
+                var docdivid = document.getElementById(iddiv).childNodes;
+
+                if (docgetId.value == "") {
+                    docdivid[3].style = "font-size:14px;color:red;";
+                    docdivid[3].innerHTML = "* Please Fill Data ";
+
+                } else {
+                    docdivid[3].style = "font-size:14px;color:green;";
+                    docdivid[3].innerHTML = "Success";
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>
+

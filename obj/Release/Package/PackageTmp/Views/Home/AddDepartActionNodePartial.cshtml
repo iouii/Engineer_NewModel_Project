@@ -1,0 +1,244 @@
+﻿<div class="col-12">
+
+
+    <form method="post">
+
+     <input type="button" onclick="AddTextBox();" value="+" class="btn btn-sm btn-block btn-outline-dark" />
+        <br />
+        <br />
+       
+        <table id="myTable" class="table table-bordered table-sm table-hover " style="font-size:small">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>JobItem</th>
+                    @*<th>JobStatus</th>*@
+                    <th>JobIncharge</th>
+                    <th>Email</th>
+                    <th>Plan Date</th>
+                    <th>JobComment</th>
+                    @*<th>JobFile</th>*@
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+
+
+
+        </table>
+        <div id="inDate">
+
+
+        </div>
+
+    
+        <input type="submit" value="submit" class="btn btn-sm btn-outline-danger"  />
+
+    </form>
+
+    
+
+
+</div>
+@using NewModelEx_S1.Models
+<script type="text/javascript">
+
+
+
+
+    var srn = 0;
+
+    function AddTextBox() {
+
+
+
+
+
+        var x = document.createElement("TBODY");
+        var y = document.createElement("TR");
+
+
+        var cellA = document.createElement("TD");
+        var cellB = document.createElement("TD");
+        //var cellC = document.createElement("TD");
+        var cellD = document.createElement("TD");
+        var cellE = document.createElement("TD");
+        var cellF = document.createElement("TD");
+        var cellG = document.createElement("TD");
+        var cellG1 = document.createElement("TD");
+        var cellH = document.createElement("TD");
+
+
+
+
+        var date = "<input id='datepicker'/>";
+
+        var cus = "<option ></option>@foreach (ModelJobItemList SelectItem in (ModelJobItemList[])ViewBag.JobListShow)
+                   {<option value='@SelectItem.SelectItemId'>@SelectItem.SelectItem </option>}"
+
+        var emp = "<option ></option>@foreach (ModelUser SelectItem in (ModelUser[])ViewBag.UserListShow)
+        {<option value='@SelectItem.EmpId'>@SelectItem.EmpFName  @SelectItem.EmpLName </option>}"
+
+        var dateNow = Date.now();
+
+        cellA.innerHTML = changeSR();
+        cellB.innerHTML = "<select class='form-control form-control-sm' id='seJob'>" + cus + "</select>";
+        // cellC.innerHTML = "wait";
+        cellD.innerHTML = "<select class='form-control form-control-sm' id='seEmp' onchange='ChangeData(this)'> " + emp + "</select> ";
+        cellE.innerHTML = "";
+        cellF.innerHTML = "<input type='date' id='date' class='form-control form-control-sm'  />";
+
+        cellG.innerHTML = "<input type='text'  class='form-control form-control-sm'  /> ";
+        // cellG1.innerHTML = "<input type='button' value='Delete' class='btn btn-sm' onclick='ChangeData(this)'/> ";
+        cellH.innerHTML = "<input type='button' value='Delete' class='btn btn-sm' onclick='deleteRow(this)'/>";
+
+
+        y.appendChild(cellA);
+        y.appendChild(cellB);
+        // y.appendChild(cellC);
+        y.appendChild(cellD);
+        y.appendChild(cellE);
+        y.appendChild(cellF);
+        y.appendChild(cellG);
+        //   y.appendChild(cellG1);
+        y.appendChild(cellH);
+
+
+
+
+
+        x.appendChild(y);
+
+
+        document.getElementById("myTable").appendChild(x);
+
+
+
+    }
+
+    function deleteRow(r) {
+
+        var i = r.parentNode.parentNode.rowIndex;
+
+
+
+
+        document.getElementById("myTable").deleteRow(i);
+
+
+
+
+    }
+
+
+    function ChangeData(r) {
+
+
+        var i = r.parentNode.parentNode.rowIndex;
+        var text = r.options[r.selectedIndex].text;
+        var y = 10;
+
+        var esum = document.getElementById("myTable").rows[i].cells;
+
+        var esumv = document.getElementById("myTable").rows[i].cells[5].innerHTML;
+
+        esum[3].innerHTML = parseFloat(esumv) + 10;
+
+        // alert(esumv);
+    }
+
+
+    function changeSR() {
+
+        return srn = srn + 1;
+    }
+
+
+</script>
+
+
+<script>
+
+   
+
+    function call(r) {
+
+        $("#datepicker").datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd'
+        });
+
+
+    }
+
+</script>
+
+<script>
+
+    function datee() {
+
+        var date = document.getElementById('date');
+
+        function checkValue(str, max) {
+            if (str.charAt(0) !== '0' || str == '00') {
+                var num = parseInt(str);
+                if (isNaN(num) || num <= 0 || num > max) num = 1;
+                str = num > parseInt(max.toString().charAt(0)) && num.toString().length == 1 ? '0' + num : num.toString();
+            };
+            return str;
+        };
+
+        date.addEventListener('input', function (e) {
+            this.type = 'text';
+            var input = this.value;
+            if (/\D\/$/.test(input)) input = input.substr(0, input.length - 3);
+            var values = input.split('-').map(function (v) {
+                return v.replace(/\D/g, '')
+            });
+            if (values[0]) values[0] = checkValue(values[0], 31);
+            if (values[1]) values[1] = checkValue(values[1], 12);
+            var output = values.map(function (v, i) {
+                return v.length == 2 && i < 2 ? v + ' - ' : v;
+            });
+            this.value = output.join('').substr(0, 14);
+        });
+
+        date.addEventListener('blur', function (e) {
+            this.type = 'text';
+            var input = this.value;
+            var values = input.split('-').map(function (v, i) {
+                return v.replace(/\D/g, '')
+            });
+            var output = '';
+
+            if (values.length == 3) {
+                var year = values[2].length !== 4 ? parseInt(values[2]) + 2000 : parseInt(values[2]);
+      
+                var day = parseInt(values[0]) - 1;
+                var month = parseInt(values[1]);
+
+                var d = new Date(year, day, month);
+
+
+                if (!isNaN(d)) {
+                    document.getElementById('result').innerText = d.toString();
+                    var dates = [d.getMonth() + 1, d.getDate(), d.getFullYear()];
+                    output = dates.map(function (v) {
+                        v = v.toString();
+                        return v.length == 1 ? '0' + v : v;
+                    }).join(' - ');
+                };
+            };
+            this.value = output;
+        });
+    }
+</script>
+
+
+
+
+@*@foreach (NewModelEx_S1.Models.item1 SelectItem in (NewModelEx_S1.Models.item1[])ViewData["depart"])
+{
+
+    <li>@SelectItem.SelectItem</li>
+}*@

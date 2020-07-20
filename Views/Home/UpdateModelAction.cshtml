@@ -1,0 +1,54 @@
+﻿@using NewModelEx_S1.Models
+@{
+    ViewBag.Title = "UpdateModelAction";
+}
+
+<h2>UpdateModelAction</h2>
+
+<div class="row">
+
+    <div class="col-12">
+
+        <div class="form-row" style="padding:5px;">
+            <div class="col-12" style="padding-top:10px;">
+                <label>Topic</label>
+                <select class="form-control form-control-sm" id="SeJobName">
+                    <option value="">- Select -</option>
+                    @foreach (ModelJobItemList SelectItem in (ModelJobItemList[])ViewBag.JobListShow)
+                    {
+                        <option value="@SelectItem.SelectItemId,@SelectItem.SelectItem">@SelectItem.SelectItem </option>}
+                </select>
+
+            </div>
+            <div class="col-12" style="padding-top:20px;">
+                <label>Plan Date</label>
+
+                <input type="text" id="datepicker" name="name" value=" " class="form-control form-control-sm" />
+            </div>
+
+            <div class="col-12" style="padding-top:20px;">
+                <label>Comment</label>
+
+                <textarea name="name" value=" " id="ComI" class="form-control "></textarea>
+            </div>
+            <div class="col-12" style="padding-top:20px;">
+                <label>Inchang</label>
+
+                <select class="form-control form-control-sm" id="SeJobIn">
+                    <option value="">- Select -</option>
+                    @foreach (ModelUser modeluser in (ModelUser[])ViewBag.UserListShow)
+                    {
+                        <option value="@modeluser.EmpId,@modeluser.EmpFName  @modeluser.EmpLName ,@modeluser.EmpNickName,@modeluser.EmpEmail">@modeluser.EmpFName </option>}
+                </select>
+
+            </div>
+
+
+
+        </div>
+        <hr />
+
+        <a href="#" onclick="AddTextBox();" class="btn btn-sm btn-outline-dark" style=" margin-left:240px"> <i class='fas fa-angle-double-right'></i> </a>
+
+    </div>
+</div>

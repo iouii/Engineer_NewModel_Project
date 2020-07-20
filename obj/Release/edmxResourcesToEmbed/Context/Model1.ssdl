@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OCTIIS_WEBAPPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="dept_id" />
+    </Key>
+    <Property Name="dept_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="department" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Eng_AccountUser">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="20" />
+    <Property Name="password" Type="nvarchar(max)" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_dept" Type="int" Nullable="false" />
+    <Property Name="id_position" Type="int" />
+    <Property Name="email" Type="nvarchar" MaxLength="100" />
+    <Property Name="nickname" Type="nvarchar" MaxLength="20" />
+    <Property Name="permission_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Eng_AddDepartmentModel">
+    <Key>
+      <PropertyRef Name="adddpmodel_id" />
+    </Key>
+    <Property Name="adddpmodel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="model_subnew" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dept_id" Type="int" Nullable="false" />
+    <Property Name="status_appord" Type="nvarchar" MaxLength="50" />
+    <Property Name="date_add" Type="nvarchar" MaxLength="50" />
+    <Property Name="model_masterdrawingid" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Eng_Clusifiation">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_clusftion" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Eng_Customer">
+    <Key>
+      <PropertyRef Name="cus_id" />
+    </Key>
+    <Property Name="cus_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cus_name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Eng_fixPermission">
+    <Key>
+      <PropertyRef Name="id_fixpermission" />
+    </Key>
+    <Property Name="id_fixpermission" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_employee" Type="nvarchar" MaxLength="4" />
+    <Property Name="id_persub" Type="int" />
+  </EntityType>
+  <EntityType Name="Eng_JobItemList">
+    <Key>
+      <PropertyRef Name="job_itemid" />
+    </Key>
+    <Property Name="job_itemid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="job_itemname" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Eng_ModelAction">
+    <Key>
+      <PropertyRef Name="id_modelact" />
+    </Key>
+    <Property Name="id_modelact" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_depmodel" Type="int" Nullable="false" />
+    <Property Name="id_jobitem" Type="int" Nullable="false" />
+    <Property Name="status_job" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_responsible" Type="nvarchar" MaxLength="50" />
+    <Property Name="emailsend" Type="nvarchar" MaxLength="50" />
+    <Property Name="plandate" Type="nvarchar" MaxLength="50" />
+    <Property Name="comment_admin" Type="nvarchar" MaxLength="500" />
+    <Property Name="comment_admin_reject" Type="nvarchar" MaxLength="500" />
+    <Property Name="dateadd_amin" Type="nvarchar" MaxLength="50" />
+    <Property Name="empid" Type="nvarchar" MaxLength="10" />
+    <Property Name="name_docpdf" Type="nvarchar" MaxLength="200" />
+    <Property Name="name_docexcel" Type="nvarchar" MaxLength="200" />
+    <Property Name="name_image" Type="nvarchar" MaxLength="200" />
+    <Property Name="comment_user" Type="nvarchar" MaxLength="500" />
+    <Property Name="date_userupdate" Type="nvarchar" MaxLength="50" />
+    <Property Name="date_useradd" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Eng_ModelSub">
+    <Key>
+      <PropertyRef Name="model_subid" />
+    </Key>
+    <Property Name="model_subid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="model_drawingid" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="drawing" Type="nvarchar" MaxLength="50" />
+    <Property Name="modelname" Type="nvarchar" MaxLength="50" />
+    <Property Name="partname" Type="nvarchar" MaxLength="50" />
+    <Property Name="revision" Type="nvarchar" MaxLength="50" />
+    <Property Name="other_commment" Type="nvarchar" MaxLength="500" />
+    <Property Name="date_add" Type="nvarchar" MaxLength="50" />
+    <Property Name="date_update" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Eng_newModel">
+    <Key>
+      <PropertyRef Name="model_drawingid" />
+    </Key>
+    <Property Name="model_drawingid" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="model_name" Type="nvarchar" MaxLength="100" />
+    <Property Name="mode_partname" Type="nvarchar" MaxLength="100" />
+    <Property Name="id_customer" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="model_datedoc" Type="nvarchar" MaxLength="20" />
+    <Property Name="model_date" Type="nvarchar" MaxLength="20" />
+    <Property Name="otherdetail" Type="nvarchar" MaxLength="500" />
+    <Property Name="status_modelid" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_partname" Type="nvarchar" MaxLength="30" />
+    <Property Name="version" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Eng_PermissionMainmenu">
+    <Key>
+      <PropertyRef Name="id_mainmenu" />
+    </Key>
+    <Property Name="id_mainmenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mainmenu_name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Eng_PermissionSub">
+    <Key>
+      <PropertyRef Name="id_persub" />
+    </Key>
+    <Property Name="id_persub" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_function" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_controler" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_action" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_permissionuser" Type="int" Nullable="false" />
+    <Property Name="name_statusfc" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_mainmenu" Type="int" />
+  </EntityType>
+  <EntityType Name="Eng_PermissionUser">
+    <Key>
+      <PropertyRef Name="Id_permissionUser" />
+    </Key>
+    <Property Name="Id_permissionUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="level_admin" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="id_position" />
+    </Key>
+    <Property Name="id_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="position" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="OCTIIS_WEBAPPModelStoreContainer">
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_AccountUser" EntityType="Self.Eng_AccountUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_AddDepartmentModel" EntityType="Self.Eng_AddDepartmentModel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_Clusifiation" EntityType="Self.Eng_Clusifiation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_Customer" EntityType="Self.Eng_Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_fixPermission" EntityType="Self.Eng_fixPermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_JobItemList" EntityType="Self.Eng_JobItemList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_ModelAction" EntityType="Self.Eng_ModelAction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_ModelSub" EntityType="Self.Eng_ModelSub" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_newModel" EntityType="Self.Eng_newModel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_PermissionMainmenu" EntityType="Self.Eng_PermissionMainmenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_PermissionSub" EntityType="Self.Eng_PermissionSub" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Eng_PermissionUser" EntityType="Self.Eng_PermissionUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

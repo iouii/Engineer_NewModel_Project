@@ -1,0 +1,333 @@
+﻿@using NewModelEx_S1.Models;
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<html>
+<head>
+    <title>Add New User</title>
+    <style>
+        .card-header {
+            background-color: none;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-header alert-light">
+            <h2>UPDATE DATA USERS</h2>
+        </div><hr />
+        @if (ViewData["UserData"] != "")
+        {
+            foreach (var userData in (List<ModelUser>)ViewData["UserData"])
+            {
+
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Id Employee</label>
+                        <div class="col-sm-10" id="inpChkemp">
+                            <input type="text" class="form-control" id="idEmployee" name="idEmployee" placeholder="0000" value="@userData.EmpId" style="width:100px;" maxlength="4" onchange="CheckNumber(),checkDataNull(this.id,'inpChkemp')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10" id="inpChknameUser">
+                            <input type="text" class="form-control" id="nameUser" name="nameUser" placeholder="Name" value="@userData.EmpFName" onchange="checkDataNull(this.id,'inpChknameUser')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">LastName</label>
+                        <div class="col-sm-10" id="inpChklastName">
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="LastName" value="@userData.EmpLName" onchange="checkDataNull(this.id,'inpChklastName')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">NickName</label>
+                        <div class="col-sm-10" id="inpChknickname">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="NickName" value="@userData.EmpNickName" onchange="checkDataNull(this.id,'inpChknickname')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Department</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="deptSel" value="@userData.EmpDep" style="display:none;" />
+                            <select type="text" class="form-control" id="department" name="department" placeholder="">
+                                @if (ViewData["Department"] != null)
+                                {
+                                    foreach (var listdepartment in (List<ModelDepartment>)ViewData["Department"])
+                                    {
+                                        <option value="@listdepartment.idDept">@listdepartment.department</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Position</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="posiSel" value="@userData.EmpPos" style="display:none;" />
+                            <select type="text" class="form-control" id="position" name="position" placeholder="">
+                                @if (ViewData["Position"] != null)
+                                {
+                                    foreach (var listposition in (List<ModelPosition>)ViewData["Position"])
+                                    {
+                                        <option value="@listposition.idPos">@listposition.Position</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-4" id="inpChkemail">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="email" value="@userData.EmpEmail" onchange="checkDataNull(this.id,'inpChkemail')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                        <div class="col-sm-4"> ogura-thia.com</div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">User Name</label>
+                        <div class="col-sm-10" id="inpChkusername">
+                            <input type="text" class="form-control" id="userName" name="userName" placeholder="u-username" value="@userData.EmpUserName" onchange="checkDataNull(this.id,'inpChkusername')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10" id="inpChkpassword">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="@userData.EmpPassWord" onchange="checkDataNull(this.id,'inpChkpassword')">
+                            <p style="font-size:14px;color:red;">* Please Fill Data </p>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <div class="row" id="domPermisuser">
+                            <input type="text" id="permissiondata" value="@userData.EmpPermission" style="display:none;" />
+                            <legend class="col-form-label col-sm-2 pt-0">PermissionUser</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="permissionUser" id="Admin" value="1">
+                                    <label class="form-check-label" for="">
+                                        Admin
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="permissionUser" id="EngineerManager" value="2">
+                                    <label class="form-check-label" for="">
+                                        EngineerManager
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="permissionUser" id="UserManager" value="3">
+                                    <label class="form-check-label" for="">
+                                        UserManager
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="permissionUser" id="User" value="4">
+                                    <label class="form-check-label" for="">
+                                        User
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group row float-right">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary" id="btnSave">SAVE</button>
+                            <button class="btn btn-danger" id="btnCancel">CANVEL</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <script type="text/javascript">
+        $("#btnSave").click(function () {
+            checkValuebeforeSave(1);
+
+        });
+        $("#btnCancel").click(function () {
+            location.href = "@Url.Action("Index","Admin")";
+
+        });
+
+
+        function checkValuebeforeSave(chkDatas) {
+
+            var tag = document.querySelectorAll("div");
+            var countTag = tag.length, countTagdiv = 0;
+            var arrdiv = [];
+            let countTagp = 0;
+            var chkData = "";
+
+            //pull id of Tag
+            for (var j = 0; j < countTag; j++) {
+                chkData = tag[j].id.search("inpChk");
+                //alert(chkData);
+                if ((tag[j].id != "" && chkData >= 0) && chkData != undefined) {
+                    arrdiv[countTagdiv] = tag[j].id;
+                    countTagdiv += 1;
+
+                }
+            }
+            if (chkDatas == 1) {
+                for (var i = 0 ; i < countTagdiv; i++) {
+                    var docgetId = document.getElementById(arrdiv[i]);
+                    if (docgetId.childNodes[3].innerHTML == "Success") {
+                        countTagp += 1;
+                    }
+
+                }
+
+                if (countTagp == arrdiv.length) {
+                    updateDataUesr();
+                }
+            } else {
+
+                for (var i = 0 ; i < countTagdiv; i++) {
+                    var docgetId = document.getElementById(arrdiv[i]);
+
+                    if (docgetId.childNodes[1].value != " ") {
+                        docgetId.childNodes[3].style = "font-size:14px;color:green;";
+                        docgetId.childNodes[3].innerHTML = "Success";
+                    }
+
+                }
+            }
+        }
+        function CheckNumber() {
+            var idEmp = $("#idEmployee").val();
+            if (isNaN(idEmp)) {
+                alert("Please Fill only number");
+                $("#idEmployee").val("");
+                $("#idEmployee").focus();
+            }
+        }
+
+        $(document).ready(function () {
+            checkDataNull('', '');
+
+            //set Value give Variable department and position
+           $("#department").val($("#deptSel").val());
+           $("#position").val($("#posiSel").val());
+
+          //set Check Radio
+           var perUser = $("#permissiondata").val();
+           var radio = $("#domPermisuser input");
+           var ae = radio[perUser].id;
+           $("#" + ae + "").prop("checked", true);
+           checkValuebeforeSave(0);
+
+        });
+
+        function checkDataNull(ids,iddiv) {
+
+            if (ids != "" && iddiv != "") {
+                var docgetId = document.getElementById(ids);
+                var docdivid = document.getElementById(iddiv).childNodes;
+
+                if (docgetId.value == "") {
+                    docdivid[3].style = "font-size:14px;color:red;";
+                    docdivid[3].innerHTML = "* Please Fill Data ";
+
+                } else {
+                    docdivid[3].style = "font-size:14px;color:green;";
+                    docdivid[3].innerHTML = "Success";
+                }
+            }
+
+        }
+        //function checkUsersame() {
+        //    var idEmployee = $("#idEmployee").val();
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Admin/CheckUsersame",
+        //        datatype: "json",
+        //        data: { idEemp: idEmployee },
+        //        success: function (data) {
+        //            //alert(data)
+        //            if (data != "" && data != undefined ) {
+
+        //                alert(data);
+        //                $("#idEmployee").val("");
+        //                $("#idEmployee").focus();
+        //                checkDataNull('idEmployee', 'inpChkemp');
+
+
+        //            }
+        //        }
+        //    });
+
+        //}
+
+        function updateDataUesr() {
+
+            var idEmployee, nameUser, lastName, nickname, department, position, userName, password, permissionUser, setpermissionUser, countPermistion, email;
+
+            idEmployee = $("#idEmployee").val();
+            nameUser = $("#nameUser").val();
+            lastName = $("#lastName").val();
+            department = $("#department").val();
+            position = $("#position").val();
+            userName = $("#userName").val();
+            password = $("#password").val();
+            email = $("#email").val();
+            nickname = $("#nickname").val();
+
+            var radio = $("#domPermisuser input");
+            var checkValueRadio;
+
+            countPermistion = radio.length;
+            for (var i = 1 ; i < countPermistion; i++) {
+                checkValueRadio = radio[i].id;
+                if ($("#" + checkValueRadio + "").prop("checked") == true) {
+                    setpermissionUser = $("#"+checkValueRadio+"").val();
+                }
+            }
+
+            var Objdata = {
+                idEmployee:idEmployee,
+                nameUser:nameUser,
+                lastName:lastName,
+                nickname:nickname,
+                department:department,
+                position:position,
+                userName:userName,
+                password:password,
+                setpermissionUser:setpermissionUser,
+                emails:email
+
+            };
+            var jsonstr = JSON.stringify(Objdata);
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/UpdateData",
+                datatype: "json",
+                data: { JsonData: jsonstr },
+                success: function (data) {
+                    if (data == "Complete") {
+                        alert("Update data success");
+                        location.href = "@Url.Action("Index","Admin")";
+                    } else {
+                        alert("Not save data");
+                    }
+                }
+            });
+        }
+
+
+
+    </script>
+</body>
+</html>

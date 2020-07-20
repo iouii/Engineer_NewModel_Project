@@ -1,0 +1,156 @@
+﻿@using NewModelEx_S1.Models
+@{
+    ViewBag.Title = "ModelDetial";
+}
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">ModelDetail</li>
+</ol>
+
+@{
+    var parameter = Request.QueryString["v"];
+
+    if (parameter == "1")
+    {
+
+        <script>alert("Record Delete Successfully.");</script>
+
+    }
+    else if (parameter == "2")
+    {
+        <script>alert("Record  Successfully.");</script>
+
+    }
+
+
+}
+
+    <div class="col-lg-12" >
+        <a href="@Url.Action("ModelPart", "Home", new { keyPart = @ViewData["drawingNumber"] })"><i class='fas fa-plus'></i> </a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm table-hover" style="font-size:14px;" id="myTable">
+
+            <thead class="thead-dark">
+
+
+                <tr class="text-center" >
+                    <th>Model Drawing#</th>
+                    <th>Model Name</th>
+                    <th>Part Name</th>
+                    <th>Revision</th>
+                    <th>Info</th>
+                    <th colspan="4"></th>
+
+                </tr>
+
+
+            </thead>
+
+            @foreach (ModelPart modelPart in (ModelPart[])ViewBag.ShowModelpart)
+            {
+                @*<div class="col-lg-5">
+
+
+                    <p>Model Drawing :@modelPart.NodeDrawing </p>
+                    <p>Part Name     :@modelPart.NodePartName </p>
+                    <p>Model Name    :@modelPart.NodeModelName</p>
+                    <p>Revision      :@modelPart.NodeRevision</p>
+                    <p>Info          :@modelPart.NodeOtherComment</p>
+                    <p id="master" style="display:none">@modelPart.MotherDrawing</p>
+                    <p id="node" style="display:none">@modelPart.NodeDrawing</p>
+
+                    <hr />
+                    <a href="@Url.Action("AddDepartAction", "Home", new {masterkey =@modelPart.MotherDrawing, nodekey =@modelPart.NodeDrawing  })" class="btn btn-sm btn-block btn-outline-dark">AddDepart</a>
+                </div>*@
+
+
+
+                <tr style="font-size:12px;" class="text-center">
+                    <td style="display:none;">@modelPart.SubId</td>
+                    <td>@modelPart.NodeDrawing </td>
+                    <td>@modelPart.NodeModelName</td>
+                    <td>@modelPart.NodePartName</td>
+                    <td>@modelPart.NodeRevision</td>
+                    <td>@modelPart.NodeOtherComment</td>
+                    <td>
+                        <a href="@Url.Action("ReportEngineer", "Home", new { masterkey = @modelPart.MotherDrawing, nodekey = @modelPart.NodeDrawing, lid = @modelPart.SubId })"><i class='fas fa-tasks' style="color:#000000"></i></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("AddDepartAction", "Home", new { masterkey = @modelPart.MotherDrawing, nodekey = @modelPart.NodeDrawing, lid = @modelPart.SubId })"><i class='fas fa-pen' style="color:#000000"></i></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("EditModelDetail", "Home", new { id = @modelPart.MotherDrawing, nodekey = @modelPart.NodeDrawing ,lid = @modelPart.SubId})"><i class='fas fa-wrench' style="color:#000000"></i></a>
+                    </td>
+                    <td>
+                        @*<a href="@Url.Action("", "Home", new {masterkey =@modelPart.MotherDrawing, nodekey =@modelPart.NodeDrawing  })"><i class='fas fa-trash' style="color:#000000"></i></a>*@
+                        <i class='fas fa-trash' style="color:#000000" onclick="Checkdel(this);"></i>
+                    </td>
+                </tr>
+
+
+
+
+
+
+            }
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+    function Checkdel(r) {
+
+        var del = prompt("Please enter Drawing Number confirm delete ","");
+        var i = r.parentNode.parentNode.rowIndex;
+        var esum = document.getElementById("myTable").rows[i].cells[0].innerHTML.trim();
+        var esum2 = document.getElementById("myTable").rows[i].cells[1].innerHTML.trim();
+        var jso = {Nodekey:esum };
+        var t = JSON.stringify(jso);
+
+        //alert(t);
+
+        if (del == esum2) {
+
+            if(t != null){
+                // alert(del);
+                $.ajax({
+                    type: 'POST',
+                    dataType:'json',
+                    url: '/Home/DeletePartAction',
+                    data: { myJSONs: t },
+                    // contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // get the result and do some magic with it
+                        alert(data);
+
+
+                        window.location.reload();
+
+
+                    }
+                });
+            }
+            else{
+                alert("Some thing  wrong!!");
+            }
+
+        }
+        else{
+
+            alert("Wrong Enter Drawing Number!");
+        }
+
+
+    }
+</script>
+
+
+
+
+
+
+
+
+

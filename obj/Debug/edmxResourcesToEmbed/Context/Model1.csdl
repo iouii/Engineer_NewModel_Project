@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OCTIIS_WEBAPPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="dept_id" />
+    </Key>
+    <Property Name="dept_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="department1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_AccountUser">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_dept" Type="Int32" Nullable="false" />
+    <Property Name="id_position" Type="Int32" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="nickname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="permission_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Eng_AddDepartmentModel">
+    <Key>
+      <PropertyRef Name="adddpmodel_id" />
+    </Key>
+    <Property Name="adddpmodel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="model_subnew" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dept_id" Type="Int32" Nullable="false" />
+    <Property Name="status_appord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_add" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="model_masterdrawingid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_Clusifiation">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_clusftion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_Customer">
+    <Key>
+      <PropertyRef Name="cus_id" />
+    </Key>
+    <Property Name="cus_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cus_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_fixPermission">
+    <Key>
+      <PropertyRef Name="id_fixpermission" />
+    </Key>
+    <Property Name="id_fixpermission" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_employee" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="id_persub" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Eng_JobItemList">
+    <Key>
+      <PropertyRef Name="job_itemid" />
+    </Key>
+    <Property Name="job_itemid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="job_itemname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_ModelAction">
+    <Key>
+      <PropertyRef Name="id_modelact" />
+    </Key>
+    <Property Name="id_modelact" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_depmodel" Type="Int32" Nullable="false" />
+    <Property Name="id_jobitem" Type="Int32" Nullable="false" />
+    <Property Name="status_job" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name_responsible" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emailsend" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="plandate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="comment_admin" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="comment_admin_reject" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="dateadd_amin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="empid" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="name_docpdf" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="name_docexcel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="name_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="comment_user" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="date_userupdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_useradd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_ModelSub">
+    <Key>
+      <PropertyRef Name="model_subid" />
+    </Key>
+    <Property Name="model_subid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="model_drawingid" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="drawing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="modelname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="partname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="revision" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="other_commment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="date_add" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_update" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_newModel">
+    <Key>
+      <PropertyRef Name="model_drawingid" />
+    </Key>
+    <Property Name="model_drawingid" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="model_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="mode_partname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="id_customer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="model_datedoc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="model_date" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="otherdetail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="status_modelid" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="customer_partname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="version" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Eng_PermissionSub">
+    <Key>
+      <PropertyRef Name="id_persub" />
+    </Key>
+    <Property Name="id_persub" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_controler" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_permissionuser" Type="Int32" Nullable="false" />
+    <Property Name="name_function" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name_action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name_statusfc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id_mainmenu" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Eng_PermissionUser">
+    <Key>
+      <PropertyRef Name="Id_permissionUser" />
+    </Key>
+    <Property Name="Id_permissionUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="level_admin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="id_position" />
+    </Key>
+    <Property Name="id_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="position1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="OCTIIS_WEBAPPEntities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departments" EntityType="Self.Department" />
+    <EntitySet Name="Eng_AccountUser" EntityType="Self.Eng_AccountUser" />
+    <EntitySet Name="Eng_AddDepartmentModel" EntityType="Self.Eng_AddDepartmentModel" />
+    <EntitySet Name="Eng_Clusifiation" EntityType="Self.Eng_Clusifiation" />
+    <EntitySet Name="Eng_Customer" EntityType="Self.Eng_Customer" />
+    <EntitySet Name="Eng_fixPermission" EntityType="Self.Eng_fixPermission" />
+    <EntitySet Name="Eng_JobItemList" EntityType="Self.Eng_JobItemList" />
+    <EntitySet Name="Eng_ModelAction" EntityType="Self.Eng_ModelAction" />
+    <EntitySet Name="Eng_ModelSub" EntityType="Self.Eng_ModelSub" />
+    <EntitySet Name="Eng_newModel" EntityType="Self.Eng_newModel" />
+    <EntitySet Name="Eng_PermissionSub" EntityType="Self.Eng_PermissionSub" />
+    <EntitySet Name="Eng_PermissionUser" EntityType="Self.Eng_PermissionUser" />
+    <EntitySet Name="Positions" EntityType="Self.Position" />
+    <EntitySet Name="Eng_PermissionMainmenu" EntityType="OCTIIS_WEBAPPModel.Eng_PermissionMainmenu" />
+  </EntityContainer>
+  <EntityType Name="Eng_PermissionMainmenu">
+    <Key>
+      <PropertyRef Name="id_mainmenu" />
+    </Key>
+    <Property Name="id_mainmenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mainmenu_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,206 @@
+﻿@using NewModelEx_S1.Models
+
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">EditNewModel</li>
+</ol>
+
+<div class="d-flex justify-content-center">
+
+    <div class="col-7 ">
+
+        <form method="post" action="/Home/EditNewModel" class="needs-validation" novalidate>
+
+            <fieldset>
+                @foreach (ModelNew editmodelnew in (ModelNew[])ViewBag.EditNewModel)
+                {
+                    <div class="form-row">
+
+                        <div class="col-12 col-lg-6 col-md-6">
+                            <label>Customer</label>
+                            <select class="form-control form-control-sm" id="cuspost" name="cuspost" required>
+
+                                @foreach (ModelCustomer modelcustomer in (ModelCustomer[])ViewBag.ShowModelCustomer)
+                                {
+
+
+                                    var item = editmodelnew.CustomerName;
+                                    var item2 = modelcustomer.CustomerName;
+
+                                    if (item == item2)
+                                    {
+
+                                        <option value="@modelcustomer.CustomerCode" selected>
+                                            @modelcustomer.CustomerName
+
+                                        </option>
+
+                                    }
+                                    else
+                                    {
+
+
+                                        <option value="@modelcustomer.CustomerCode">
+
+
+                                            @modelcustomer.CustomerName
+
+                                        </option>
+
+                                    }
+
+
+
+
+                                }
+
+
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6">
+                            <label>Model Name</label>
+                            <input type="text" name="modelnamepost" value="@editmodelnew.ModelName" class="form-control form-control-sm" id="modelnamepost" required />
+                            <div class="invalid-feedback">
+                                Please Input Model Name.
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Program Name</label>
+                            <input type="text" name="programpost" value="@editmodelnew.ProgramName" class="form-control form-control-sm  " id="programnamepost" required />
+                            <div class="invalid-feedback">
+                                Please Program Name.
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Drawing #</label>
+                            <input type="text" name="drawingpost" value="@editmodelnew.ModelDrawing" class="form-control form-control-sm " id="drawingnopost" required  style="display:none"/>
+                            <input type="text" name="" value="@editmodelnew.ModelDrawing" class="form-control form-control-sm " id="" required disabled />
+
+                            <div class="invalid-feedback">
+                                Please Input Drawing Number.
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Parts Name</label>
+                            <input type="text" name="partnamepost" value="@editmodelnew.PartName" class="form-control form-control-sm " id="partnamepost" required />
+                            <div class="invalid-feedback">
+                                Please input Part Name.
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+
+                            <label>Date</label>
+                            <input type="text" name="datepost" value="@editmodelnew.ModelDate" id="datepicker" class="form-control form-control-sm " required />
+                            <div class="invalid-feedback">
+                                Please Input Date.
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Classification</label>
+                            <select class="form-control form-control-sm" id="classpost" name="classpost" required>
+
+                                @foreach (ModelClassification modelclassification in (ModelClassification[])ViewBag.ShowModelClassification)
+                                {
+
+                                    var item3 = editmodelnew.Classification;
+                                    var item4 = modelclassification.ClassiName;
+
+                                    if (item3 == item4)
+                                    {
+
+                                        <option value="@modelclassification.ClassiCode" selected>
+                                            @modelclassification.ClassiName
+
+                                        </option>
+
+                                    }
+                                    else
+                                    {
+
+
+                                        <option value="@modelclassification.ClassiCode">
+
+
+                                            @modelclassification.ClassiName
+
+                                        </option>
+
+                                    }
+
+
+                                }
+
+                            </select>
+
+
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Rev</label>
+                            <input type="text" name="revpost" value="@editmodelnew.version" class="form-control form-control-sm  0" id="revpost" required />
+                            <div class="invalid-feedback">
+                                Please Input Revision .
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Other Info</label>
+                            <textarea name="textpost" value="" class="form-control " id="textpost">@editmodelnew.OtherInfo</textarea>
+                        </div>
+
+
+
+                    </div>
+                }
+                <br />
+
+                <button type="submit" class="btn btn-sm btn-outline-dark">Increase</button>
+                <br />
+                <hr />
+            </fieldset>
+        </form>
+
+    </div>
+
+</div>
+<script>
+
+
+    $("#datepicker").datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy-mm-dd'
+    });
+
+</script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+<script>
+
+    function back()
+    {
+
+        document.window.location.href = previousPage;
+    }
+</script>

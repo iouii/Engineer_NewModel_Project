@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OCTIIS_WEBAPPModelStoreContainer" CdmEntityContainer="OCTIIS_WEBAPPEntities3">
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+          <ScalarProperty Name="department1" ColumnName="department" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_AccountUser">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_AccountUser">
+        <MappingFragment StoreEntitySet="Eng_AccountUser">
+          <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+          <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+          <ScalarProperty Name="id_position" ColumnName="id_position" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nickname" ColumnName="nickname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_AddDepartmentModel">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_AddDepartmentModel">
+        <MappingFragment StoreEntitySet="Eng_AddDepartmentModel">
+          <ScalarProperty Name="model_masterdrawingid" ColumnName="model_masterdrawingid" />
+          <ScalarProperty Name="adddpmodel_id" ColumnName="adddpmodel_id" />
+          <ScalarProperty Name="model_subnew" ColumnName="model_subnew" />
+          <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+          <ScalarProperty Name="status_appord" ColumnName="status_appord" />
+          <ScalarProperty Name="date_add" ColumnName="date_add" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_Clusifiation">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_Clusifiation">
+        <MappingFragment StoreEntitySet="Eng_Clusifiation">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name_clusftion" ColumnName="name_clusftion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_Customer">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_Customer">
+        <MappingFragment StoreEntitySet="Eng_Customer">
+          <ScalarProperty Name="cus_id" ColumnName="cus_id" />
+          <ScalarProperty Name="cus_name" ColumnName="cus_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_fixPermission">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_fixPermission">
+        <MappingFragment StoreEntitySet="Eng_fixPermission">
+          <ScalarProperty Name="id_fixpermission" ColumnName="id_fixpermission" />
+          <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+          <ScalarProperty Name="id_persub" ColumnName="id_persub" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_JobItemList">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_JobItemList">
+        <MappingFragment StoreEntitySet="Eng_JobItemList">
+          <ScalarProperty Name="job_itemid" ColumnName="job_itemid" />
+          <ScalarProperty Name="job_itemname" ColumnName="job_itemname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_ModelAction">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_ModelAction">
+        <MappingFragment StoreEntitySet="Eng_ModelAction">
+          <ScalarProperty Name="id_modelact" ColumnName="id_modelact" />
+          <ScalarProperty Name="id_depmodel" ColumnName="id_depmodel" />
+          <ScalarProperty Name="id_jobitem" ColumnName="id_jobitem" />
+          <ScalarProperty Name="status_job" ColumnName="status_job" />
+          <ScalarProperty Name="name_responsible" ColumnName="name_responsible" />
+          <ScalarProperty Name="emailsend" ColumnName="emailsend" />
+          <ScalarProperty Name="plandate" ColumnName="plandate" />
+          <ScalarProperty Name="comment_admin" ColumnName="comment_admin" />
+          <ScalarProperty Name="comment_admin_reject" ColumnName="comment_admin_reject" />
+          <ScalarProperty Name="dateadd_amin" ColumnName="dateadd_amin" />
+          <ScalarProperty Name="empid" ColumnName="empid" />
+          <ScalarProperty Name="name_docpdf" ColumnName="name_docpdf" />
+          <ScalarProperty Name="name_docexcel" ColumnName="name_docexcel" />
+          <ScalarProperty Name="name_image" ColumnName="name_image" />
+          <ScalarProperty Name="comment_user" ColumnName="comment_user" />
+          <ScalarProperty Name="date_userupdate" ColumnName="date_userupdate" />
+          <ScalarProperty Name="date_useradd" ColumnName="date_useradd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_ModelSub">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_ModelSub">
+        <MappingFragment StoreEntitySet="Eng_ModelSub">
+          <ScalarProperty Name="model_subid" ColumnName="model_subid" />
+          <ScalarProperty Name="model_drawingid" ColumnName="model_drawingid" />
+          <ScalarProperty Name="drawing" ColumnName="drawing" />
+          <ScalarProperty Name="modelname" ColumnName="modelname" />
+          <ScalarProperty Name="partname" ColumnName="partname" />
+          <ScalarProperty Name="revision" ColumnName="revision" />
+          <ScalarProperty Name="other_commment" ColumnName="other_commment" />
+          <ScalarProperty Name="date_add" ColumnName="date_add" />
+          <ScalarProperty Name="date_update" ColumnName="date_update" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_newModel">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_newModel">
+        <MappingFragment StoreEntitySet="Eng_newModel">
+          <ScalarProperty Name="model_drawingid" ColumnName="model_drawingid" />
+          <ScalarProperty Name="model_name" ColumnName="model_name" />
+          <ScalarProperty Name="mode_partname" ColumnName="mode_partname" />
+          <ScalarProperty Name="id_customer" ColumnName="id_customer" />
+          <ScalarProperty Name="model_datedoc" ColumnName="model_datedoc" />
+          <ScalarProperty Name="model_date" ColumnName="model_date" />
+          <ScalarProperty Name="otherdetail" ColumnName="otherdetail" />
+          <ScalarProperty Name="status_modelid" ColumnName="status_modelid" />
+          <ScalarProperty Name="customer_partname" ColumnName="customer_partname" />
+          <ScalarProperty Name="version" ColumnName="version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_PermissionSub">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_PermissionSub">
+        <MappingFragment StoreEntitySet="Eng_PermissionSub">
+          <ScalarProperty Name="id_mainmenu" ColumnName="id_mainmenu" />
+          <ScalarProperty Name="name_statusfc" ColumnName="name_statusfc" />
+          <ScalarProperty Name="name_action" ColumnName="name_action" />
+          <ScalarProperty Name="name_function" ColumnName="name_function" />
+          <ScalarProperty Name="id_persub" ColumnName="id_persub" />
+          <ScalarProperty Name="name_controler" ColumnName="name_controler" />
+          <ScalarProperty Name="id_permissionuser" ColumnName="id_permissionuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_PermissionUser">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_PermissionUser">
+        <MappingFragment StoreEntitySet="Eng_PermissionUser">
+          <ScalarProperty Name="Id_permissionUser" ColumnName="Id_permissionUser" />
+          <ScalarProperty Name="level_admin" ColumnName="level_admin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Positions">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Position">
+        <MappingFragment StoreEntitySet="Position">
+          <ScalarProperty Name="id_position" ColumnName="id_position" />
+          <ScalarProperty Name="position1" ColumnName="position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eng_PermissionMainmenu">
+      <EntityTypeMapping TypeName="OCTIIS_WEBAPPModel.Eng_PermissionMainmenu">
+        <MappingFragment StoreEntitySet="Eng_PermissionMainmenu">
+          <ScalarProperty Name="mainmenu_name" ColumnName="mainmenu_name" />
+          <ScalarProperty Name="id_mainmenu" ColumnName="id_mainmenu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

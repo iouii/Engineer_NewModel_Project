@@ -1,0 +1,127 @@
+﻿@using NewModelEx_S1.Models;
+@{
+    ViewBag.Title = "ModelDepartAction";
+}
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Report")">Home</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("ModelDetial", "Report", new { id = @ViewBag.masterkey })">ModelDetail</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("AddDepartAction", "Report", new { masterkey = @ViewBag.masterkey, lid = @ViewBag.nodekey })">AddDepartAction</a></li>
+    <li class="breadcrumb-item active" aria-current="page">DepartAction</li>
+</ol>
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-9">
+
+            @*<a href="@Url.Action("AddNewModel", "Home" )"><i class='fas fa-plus' style="color:#0094ff"></i> </a>*@
+
+        </div>
+        <div class="col-lg-3">
+
+            <input type="text" name="name" value="" id="myInput" placeholder="search" class="form-control form-control-sm" />
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@{
+    int i = 1;
+<div class="col-lg-12" style="margin-top:5px;">
+    @*<input type="text" name="name" value="" id="myInput" placeholder="search" class="form-control form-control-sm" />*@
+
+    <table class="table table-bordered table-sm table-hover text-center" id="myTable">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Performer</th>
+
+                @*<th>Plan Date</th>*@
+                <th>Comment</th>
+                <th colspan="3"></th>
+
+
+            </tr>
+        </thead>
+        @foreach (ModelDepartJob modeldepartjoblist in (ModelDepartJob[])ViewBag.ShowModelpartjoblist)
+        {
+        <tr style="font-size:13px;">
+
+            <td>@i</td>
+            <td align="left">@modeldepartjoblist.DepartJobName </td>
+
+            @{int sta = Convert.ToInt32(modeldepartjoblist.DepartJobStatus);
+
+
+
+
+            }
+
+            @switch (sta)
+            {
+                case 0:
+
+                    <td style="background-color:#FAFE4B;">Pending</td>
+                    break;
+                case 1:
+
+                <td>Awaiting review</td>
+
+                    break;
+                case 2:
+
+                <td>Reject</td>
+
+                    break;
+                case 4:
+
+                <td style="background-color:#87C540;">Finished</td>
+
+                    break;
+
+            }
+
+
+
+            <td>@modeldepartjoblist.DepartJobActionName </td>
+            @*<td>@modeldepartjoblist.DepartJobDueDate </td>*@
+            <td align="left">@modeldepartjoblist.DepartJobActionComment </td>
+
+            <td align="center">
+                <a href="@Url.Action("DepartActionModelDataJob", "Report", new { masterkey = @ViewBag.masterkey, nodekey = @ViewBag.nodekey, idlist = @ViewBag.idlist, idModelAction = @modeldepartjoblist.ModelId })"><i class='far fa-file-alt' style="color:#000000;font-size:14px;"></i></a>
+            </td>
+
+        </tr>
+
+
+            i++;
+        }
+
+
+
+    </table>
+    
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+
+
+
+

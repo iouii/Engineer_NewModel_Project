@@ -1,0 +1,111 @@
+﻿@using NewModelEx_S1.Models
+
+
+<div class="col-lg-7">
+
+@foreach (ModelPart reportP in (ModelPart[])ViewBag.reportP)
+{ 
+
+    
+    <div class="table-responsive">
+        
+    
+        <table class="table table-borderless table-sm  " style="font-size:14px;margin-top:5px;" >
+          
+
+                <tr>
+                    <td style="background-color:#000000; font-size:20px; color:#ffffff">New Action Control Report</td>
+                        
+                    <td>Model :@reportP.NodeModelName @reportP.NodePartName</td>
+                   
+                   
+                </tr>
+
+          
+            </table>
+
+
+</div>
+
+}
+
+
+</div>
+<div class="col-lg-12">
+
+   
+
+
+
+    <div class="table-responsive">
+
+
+        <table class="table table-bordered table-sm table-hover table-striped" style="font-size:14px;margin-top:5px;" id="myTable">
+            <thead class="thead-dark text-center">
+
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Plan Date</th>
+                    <th>Incharge</th>
+                    <th>Status</th>
+                    <th>Department</th>
+
+                </tr>
+
+            </thead>
+            @{var i = 1;}
+            @foreach (ModelDepartJob reportE in (ModelDepartJob[])ViewBag.reportE)
+            {
+                <tr style="font-size:12px;">
+                    <td align="center"> @i </td>
+                    <td> @reportE.DepartJobName </td>
+                    <td align="center"> @reportE.DepartJobDueDate </td>
+                    <td align="center"> @reportE.DepartJobActionName </td>
+
+                    @{int sta = Convert.ToInt32(@reportE.DepartJobStatus);
+
+
+
+
+                    }
+
+                    @switch (sta)
+                    {
+                        case 0:
+
+                            <td style="background-color:#FAFE4B;" align="center">Pending</td>
+                            break;
+                        case 1:
+
+                        <td>wait approve</td>
+
+                            break;
+                        case 2:
+
+                        <td>reject</td>
+
+                            break;
+                        case 4:
+
+                        <td style="background-color:#87C540;" align="center">Finished</td>
+
+                            break;
+
+                    }
+
+
+                  
+
+
+                    <td align="center"> @reportE.DepartCode </td>
+
+                </tr>
+
+                i++;
+            }
+
+
+        </table>
+    </div>
+</div>

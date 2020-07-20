@@ -1,0 +1,206 @@
+﻿@using NewModelEx_S1.Models
+<style>
+
+        .the-legend {
+    border-style: none;
+    border-width: 0;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 0;
+    width: auto;
+    padding: 0 10px;
+    border: 0px solid #e0e0e0;
+}
+.the-fieldset {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+</style>
+
+<div class="d-flex justify-content-center ">
+    @{
+        var parameter = Request.QueryString["v"];
+
+        if (parameter == "1")
+        {
+
+            <script>alert("Record Delete Successfully.");</script>
+        }
+        else if (parameter == "2")
+        {
+            <script>alert("Record  Successfully.");</script>
+
+        }
+
+}
+</div>
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("ModelDetial", "Home", new { id = @ViewBag.masterkey })">ModelDetail</a></li>
+    <li class="breadcrumb-item active" aria-current="page">AddDepartAction</li>
+</ol>
+        <div class="col-12" >
+            
+            <a href="#"><i class='fas fa-plus' style="color:#ff0000" data-toggle="modal" data-target="#exampleModalCenter"></i> </a> 
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm table-hover" style="font-size:14px;" id="myTable">
+                    <thead class="thead-dark">
+                        <tr class="text-center" >
+                            <th style="display:none;"></th>
+                            <th>Depart</th>
+                            <th>Status</th>
+                            <th>Date Create</th>
+                            <th colspan="3"></th>
+                        </tr>
+
+                    </thead>
+                    @foreach (ModelShowDepartList modeldepartlist in (ModelShowDepartList[])ViewBag.ShowModeldepartList)
+                    {
+                        <tr>
+                            <td style="display:none;">@modeldepartlist.DepartListId</td>
+                            <td>@modeldepartlist.DepartName</td>
+                            <td align="center">@modeldepartlist.DepartStatus</td>
+                            <td align="center">@modeldepartlist.DepartDate</td>
+                            
+                            <td align="center">
+                                <a href="@Url.Action("ModelDepartAction", "Home", new { masterkey = @ViewBag.masterkey, nodekey = @ViewBag.nodekey, idlist = @modeldepartlist.DepartListId })"><i class='fas fa-pen' style="color:#000000"></i></a>
+                            </td>
+                            @*<td align="center">
+                                <a href="@Url.Action("", "Home" )"><i class='fas fa-wrench' style="color:#000000"></i></a>
+                            </td>*@
+                            <td align="center">
+                                @*<a href="@Url.Action("DeleteDepartAction", "Home", new { masterkey = @ViewBag.masterkey, nodekey = @ViewBag.nodekey, idlist = @modeldepartlist.DepartListId })" onclick="return confirm('Are you sure to delete this data??')"><i class='fas fa-trash' style="color:#000000"></i></a>*@
+                               
+                               <i class='fas fa-trash' style="color:#000000" onclick="Checkdel(this);"></i>
+                            </td>
+                        </tr>
+
+
+                    }
+
+                </table>
+
+            </div>
+        </div>
+
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create Depart Action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              
+                    <form method="post" action="/Home/AddDepartAction">
+                        <div class="modal-body">
+                           
+                                <div class="form-row" >
+
+                                    <div class="col-6">
+                                       
+                                        <input type="text" name="" value="@ViewBag.masterkey" class="form-control form-control-sm " id="modelnamepost" style="display:none" disabled />
+                                        <input type="text" name="masterdrawingpost" value="@ViewBag.masterkey" class="form-control form-control-sm " id="modelnamepost" style="display:none" />
+                                    </div>
+                                    <div class="col-6" >
+                                        
+                                        <input type="text" name="" value="@ViewBag.nodekey" class="form-control form-control-sm " id="modelnamepost" style="display:none" disabled />
+                                        <input type="text" name="subdrawingpost" value="@ViewBag.nodekey" class="form-control form-control-sm " id="modelnamepost" style="display:none" />
+
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="form-group d-flex justify-content-center" style="margin-top:5px;">
+                                           
+                                            <select class="form-control form-control-sm " name="departpost" id="departpost" >
+                                                <option value="">Plase Select Department</option>
+                                                @foreach (ModelDetailDepart modeldepart in (ModelDetailDepart[])ViewBag.ShowModelDepart)
+                                                {
+                                                    <option value="@modeldepart.DepartCode">@modeldepart.DepartName </option>}
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="col-12">
+
+                                    <button type="submit" class="btn btn-sm btn-outline-dark">Submit</button>
+                                </div>
+
+                            </div>
+
+
+                      
+                    </form>
+                </div>
+                
+      
+    </div>
+</div>
+<script>
+
+    function dd(r)
+    {
+        var del = prompt("Please enter text confirm delete ", " ");
+        var i = r.parentNode.parentNode.rowIndex;
+        var esum = document.getElementById("myTable").rows[i].cells[0].innerHTML;
+        var aa  =esum;
+        var jso = { Masterkey:@ViewBag.masterkey , Nodekey:@ViewBag.nodekey , Idlist:esum };
+        var t = JSON.stringify(jso);
+       
+        alert(t);
+    }
+
+</script>
+<script>
+
+    function Checkdel(r) {
+
+        var del = prompt("Please enter text confirm delete ","");
+        var i = r.parentNode.parentNode.rowIndex;
+        var esum = document.getElementById("myTable").rows[i].cells[0].innerHTML;
+        var jso = { Masterkey :@ViewBag.masterkey , Nodekey:@ViewBag.nodekey , Idlist:esum };
+        var t = JSON.stringify(jso);
+   
+
+        if (del == "delete") {
+            if(t != null){
+                // alert(del);
+                $.ajax({
+                type: 'POST',
+                dataType:'json',
+                url: '/Home/DeleteDepartAction',
+                data: { myJSONs: t },
+                // contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                // get the result and do some magic with it
+                        alert(data);
+
+
+                        window.location.href="@Html.Raw(Url.Action("AddDepartAction", "Home", new { masterkey= @ViewBag.masterkey ,lid = @ViewBag.nodekey }))";
+
+
+            }
+            });
+            }
+            else{
+                alert("Some thing  wrong!!");
+            }
+
+        }
+        else{
+
+            alert("OK");
+        }
+           
+
+    }
+</script>

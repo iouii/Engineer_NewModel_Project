@@ -1,0 +1,352 @@
+﻿@using NewModelEx_S1.Models
+
+<style>
+   .the-legend {
+    border-style: none;
+    border-width: 0;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 0;
+    width: auto;
+    padding: 0 10px;
+    border: 0px solid #e0e0e0;
+}
+.the-fieldset {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+
+
+}
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+#text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+ 
+  color: white;
+ 
+}
+</style>
+<div class="col-12">
+    <div class="row">
+
+        <div class="col-12" id="overlay" >
+            <div class="spinner-border text-primary" id="text"></div>
+   
+        </div>
+
+        <div class="col-3">
+
+            <div class="form-row" style="padding:5px;">
+                <div class="col-12" style="padding-top:10px;">
+                    <label>Topic</label>
+                    <select class="form-control form-control-sm" id="SeJobName">
+                        <option value="">- Select -</option>
+                        @foreach (ModelJobItemList SelectItem in (ModelJobItemList[])ViewBag.JobListShow)
+                        {
+                            <option value="@SelectItem.SelectItemId,@SelectItem.SelectItem">@SelectItem.SelectItem </option>}
+                    </select>
+
+                </div>
+                <div class="col-12" style="padding-top:20px;">
+                    <label>Plan Date</label>
+
+                    <input type="text" id="datepicker" name="name" value=" " class="form-control form-control-sm"  />
+                </div>
+
+                <div class="col-12" style="padding-top:20px;">
+                    <label>Comment</label>
+
+                    <textarea name="name" value=" " id="ComI" class="form-control "></textarea>
+                </div>
+                <div class="col-12" style="padding-top:20px;">
+                    <label>Inchang</label>
+
+                    <select class="form-control form-control-sm" id="SeJobIn">
+                        <option value="x">- Select -</option>
+                        @foreach (ModelUser modeluser in (ModelUser[])ViewBag.UserListShow)
+                        {
+                            <option value="@modeluser.EmpId,@modeluser.EmpFName  @modeluser.EmpLName ,@modeluser.EmpNickName,@modeluser.EmpEmail">@modeluser.EmpFName </option>}
+                    </select>
+
+                </div>
+              
+                <div class="col-12 d-flex justify-content-end" style="padding-top:20px;">
+                    <a href="#" onclick="AddTextBox();" > <i class='fas fa-angle-double-right'></i> </a>
+                </div>
+
+            </div>
+          
+           
+            </div>
+        <div class="col-9" style="padding-top:10px;">
+
+
+            <table id="myTable" class="table table-bordered table-hover table-responsive-sm text-center table-sm" style="font-size:small;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th style="display:none">Item</th>
+                        <th>ItemName</th>
+                        <th style="display:none">EmpId</th>
+                        <th>Name</th>
+                        <th style="display:none">Email</th>
+                        <th>NickName</th>
+                        <th>Plan</th>
+                        <th>Comment</th>
+                        <th><i class='fas fa-file-alt' onclick="GetDataAdd();show();"></i> </th>
+
+
+                    </tr>
+                </thead>
+
+
+
+            </table>
+
+            <p id="der"></p>
+        </div>
+
+       
+
+    </div>
+
+</div>
+
+<script>
+
+    $("#datepicker").datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy-mm-dd'
+    });
+
+
+
+
+    var srn = 0;
+
+    function AddTextBox() {
+
+        var JobInName = $("#SeJobIn").val();
+
+        if(JobInName !== "x"){
+
+            var JobName = $("#SeJobName").val();
+        JobName = JobName.split(",");
+
+        var JobNameText = $("#SeJobName").text();
+
+        var JobDatePlan = $("#datepicker").val();
+        
+        JobInName = JobInName.split(",");
+
+        var JobCom = $("#ComI").val();
+
+        
+
+
+        var x = document.createElement("TBODY");
+        var y = document.createElement("TR");
+
+
+        var cellA = document.createElement("TD");
+        var cellB = document.createElement("TD");
+        var cellC = document.createElement("TD");
+        var cellD = document.createElement("TD");
+        var cellE = document.createElement("TD");
+        var cellF = document.createElement("TD");
+        var cellG = document.createElement("TD");
+        var cellH = document.createElement("TD");
+        var cellI = document.createElement("TD");
+        var cellJ = document.createElement("TD");
+
+        x.style = "font-size:12px;";
+        cellE.style = "font-size:11px";
+        cellF.style = "text-color:#ff0000";
+        cellB.style = "display:none;"
+        cellD.style = "display:none;"
+        cellJ.style = "display:none;"
+        cellA.innerHTML ="#";
+        cellB.innerHTML = JobName[0];
+        cellC.innerHTML = JobName[1];
+        cellD.innerHTML = JobInName[0];
+        cellE.innerHTML = JobInName[1];
+        cellF.innerHTML = JobInName[2];
+        cellG.innerHTML = JobDatePlan;
+        cellH.innerHTML = JobCom;
+        cellI.innerHTML = " <a href='#' class='btn  btn-sm btn-outline-danger btn-block'  onclick='deleteRow(this)' style='font-size:11px;' ><i class='	far fa-trash-alt'></i></a>";
+        cellJ.innerHTML = JobInName[3];
+        y.appendChild(cellA);
+        y.appendChild(cellB);
+        y.appendChild(cellC);
+        y.appendChild(cellD);
+        y.appendChild(cellE);
+        y.appendChild(cellF);
+        y.appendChild(cellG);
+        y.appendChild(cellH);
+        y.appendChild(cellI);
+        y.appendChild(cellJ);
+
+
+        x.appendChild(y);
+
+
+        document.getElementById("myTable").appendChild(x);
+
+        clearIn();
+
+        }else{
+
+            alert("Plase check input data")
+        }
+        
+
+    }
+    
+
+
+    function deleteRow(r) {
+
+        var i = r.parentNode.parentNode.rowIndex;
+
+
+
+
+        document.getElementById("myTable").deleteRow(i);
+
+
+
+
+    }
+
+
+    function ChangeData(r) {
+
+
+        var i = r.parentNode.parentNode.rowIndex;
+        var text = r.options[r.selectedIndex].text;
+        var y = 10 ;
+
+        var esum = document.getElementById("myTable").rows[i].cells;
+
+        var esumv = document.getElementById("myTable").rows[i].cells[5].innerHTML  ;
+
+        esum[3].innerHTML = parseFloat(esumv) + 10;
+
+        // alert(esumv);
+    }
+
+
+    function changeSR() {
+
+        return srn = srn + 1;
+    }
+
+    function clearIn() {
+
+        $("#SeJobName").val("");
+        $("#datepicker").val("");
+        $("#SeJobIn").val("x");
+        $("#ComI").val("");
+    }
+
+    function GetDataAdd()
+    {
+       
+
+        var tableLen = document.getElementById("myTable").rows.length;
+        var table = document.getElementById("myTable");
+
+        var ArData = [];
+
+        var jobName = [];
+        var jobInName = [];
+        var jobDate = [];
+        var jobCom = [];
+        var jobEmail = [];
+        var jobNameF = [];
+        var namejob  = [];
+
+        for (i = 1; i < tableLen; i++) {
+
+            jobName.push(table.rows[i].cells[1].innerHTML);
+            jobInName.push(table.rows[i].cells[3].innerHTML);
+            jobDate.push(table.rows[i].cells[6].innerHTML);
+            jobCom.push(table.rows[i].cells[7].innerHTML);
+            jobEmail.push(table.rows[i].cells[9].innerHTML);
+            jobNameF.push(table.rows[i].cells[4].innerHTML);
+            namejob.push(table.rows[i].cells[2].innerHTML);
+
+            var ObjAdd, myJSON, text, obj;
+
+            ObjAdd = { JobName: jobName, JobInName: jobInName, JobDate: jobDate, JobCom: jobCom, JobEmail: jobEmail, IdListDepart: @ViewBag.idlist,JobNameIn :jobNameF ,NameJob :namejob};
+            myJSON = JSON.stringify(ObjAdd);
+
+            //localStorage.setItem("testJSON", myJSON);
+
+
+            //text = localStorage.getItem("testJSON");
+            //obj = JSON.parse(text);
+
+
+
+            //ArData.push(myJSON);
+
+
+        }
+
+
+
+        // ArData
+        //alert(myJSON);
+
+        if(myJSON != null){
+
+
+        $.ajax({
+            type: 'POST',
+            dataType:'json',
+            url: '/Home/ActionJob',
+            data: { myJSONs: myJSON },
+            // contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            // get the result and do some magic with it
+                alert(data);
+
+               
+                window.location.href="@Html.Raw(Url.Action("ModelDepartAction", "Home", new { masterkey= @ViewBag.masterkey ,nodekey = @ViewBag.nodekey,idlist = @ViewBag.idlist }))";
+
+
+        }
+        });
+
+        }
+        else
+        {
+            alert("Plase input data");
+        }
+
+    }
+</script>
+
+<script>
+
+    function show(){
+
+        document.getElementById("overlay").style.display = "block";
+    }
+
+</script>
+

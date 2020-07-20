@@ -1,0 +1,156 @@
+﻿
+@using NewModelEx_S1.Models
+
+@{
+
+    ViewBag.Title = "Index";
+}
+<style>
+
+   
+
+</style>
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item" active" aria-current="page">Home</li>
+</ol>
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-9">
+
+            @*<a href="@Url.Action("AddNewModel", "Home" )"><i class='fas fa-plus' style="color:#0094ff"></i> </a>*@
+
+        </div>
+        <div class="col-lg-3">
+
+            <input type="text" name="name" value="" id="myInput" placeholder="search" class="form-control form-control-sm" />
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="col-lg-12" style="margin-top:10px;">
+    @*<a href="@Url.Action("AddNewModel", "Report")"><i class='fas fa-plus' style="color:#ff0000"></i> </a>*@
+
+   
+    <div class="table-responsive">
+        @*<input type="text" name="name" value="" id="myInput" placeholder="search" class="form-control form-control-sm"/>*@
+        <table class="table table-bordered table-sm  table-striped" style="font-size:14px; margin-top:5px;" id="myTable" >
+            <thead class="thead-dark">
+                
+                <tr>
+                    @*<th>#</th>*@
+                    <th>Program Name</th>
+                    <th>Customer Name</th>
+                    <th align="center">Drawing#</th>
+                    <th>Model Name</th>
+                    <th>Part Name</th>
+
+                    <th>Date</th>
+                    <th>Classification</th>
+                    <th>Other Info</th>
+                    <th colspan="3"></th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                @{ var i = 1;}
+                @foreach (ModelNew modelnew in (ModelNew[])ViewData["showmodelnew"])
+                {
+                  
+                
+                    <tr style="font-size:12px;">
+                        @*<td align="center">@i</td>*@
+                        <td>@modelnew.ProgramName</td>
+                        <td>@modelnew.CustomerName</td>
+                        <td align="center">@modelnew.ModelDrawing</td>
+                        <td>@modelnew.ModelName</td>
+                        <td>@modelnew.PartName</td>
+
+                        <td>@modelnew.ModelDate</td>
+                        <td>@modelnew.Classification</td>
+                        <td>@modelnew.OtherInfo</td>
+                        <td align="center">
+                            <a href="@Url.Action("ModelDetial", "Report", new { id=@modelnew.ModelDrawing })"><i class='fas fa-folder-open' style="color:#000000"></i></a>
+                        </td>
+                        @*<td align="center">
+                            <a href="@Url.Action("", "Home", new { })"><i class='fas fa-wrench' style="color:#000000"></i></a>
+                        </td>
+                        <td align="center">
+                            <a href="@Url.Action("", "Home" )"><i class='fas fa-trash' style="color:#000000"></i></a>
+                            <i class='fas fa-trash' style="color:#000000" onclick="Checkdel(this);"></i>
+                        </td>*@
+
+
+                    </tr>
+                    i++;
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script>
+
+    function Checkdel(r) {
+
+        var del = prompt("Please enter Drawing Number confirm delete ","");
+        var i = r.parentNode.parentNode.rowIndex;
+        var esum = document.getElementById("myTable").rows[i].cells[2].innerHTML.trim();
+        var jso = {Masterkey:esum };
+        var t = JSON.stringify(jso);
+
+        //alert(t);
+
+        if (del == esum) {
+
+            if(t != null){
+                // alert(del);
+                $.ajax({
+                    type: 'POST',
+                    dataType:'json',
+                    url: '/Home/NewModelDelete',
+                    data: { myJSONs: t },
+                    // contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        // get the result and do some magic with it
+                        alert(data);
+
+
+                        window.location.reload();
+
+
+                    }
+                });
+            }
+            else{
+                alert("Some thing  wrong!!");
+            }
+
+        }
+        else{
+
+            alert("Wrong Enter Drawing Number!");
+        }
+
+
+    }
+</script>
+
+
+    <script>
+   $(document).ready(function(){
+       $("#myInput").on("keyup", function() {
+           var value = $(this).val().toLowerCase();
+           $("#myTable tr").filter(function() {
+               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+           });
+       });
+   });
+    </script>

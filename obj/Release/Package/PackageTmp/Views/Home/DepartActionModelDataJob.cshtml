@@ -1,0 +1,297 @@
+﻿@using NewModelEx_S1.Models
+@{
+    ViewBag.Title = "DepartActionModelDataJob";
+}
+<style>
+
+    .cus-text-query{
+        background-color:#cfcdcd;
+        font-size:12px;
+    }
+    .cus-text-head{
+        background-color:#59595a;
+        color:azure;  
+        font-size:14px;  
+    }
+</style>
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("ModelDetial", "Home", new { id = @ViewBag.masterkey })">ModelDetail</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("AddDepartAction", "Home", new { masterkey = @ViewBag.masterkey, lid = @ViewBag.nodekey })">AddDepartAction</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("ModelDepartAction", "Home", new { masterkey = @ViewBag.masterkey, nodekey = @ViewBag.nodekey, idlist = @ViewBag.idlist })">DepartAction</a></li>
+    <li class="breadcrumb-item active" aria-current="page">DataJob</li>
+</ol>
+
+<div class="col-4">
+    <table class="table table-sm table-bordered">
+        <tr>
+            <td style="background-color:#363637;color:#ffffff ">STATUS</td>
+
+            @{ int status = Convert.ToInt32(@ViewBag.statusshow);}
+
+            @switch (status)
+            {
+
+                case 0:
+
+                    <td style="background-color:#FAFE4B">Pending</td>
+                    break;
+
+
+                case 1:
+
+
+                <td style="background-color:#00ffff">Awaiting review</td>
+                    break;
+                case 2:
+
+                <td style="background-color:#ff0000">Reject</td>
+                    break;
+                case 4:
+
+                <td style="background-color:#00ff21">Finished</td>
+                    break;
+                case 3:
+
+                <td></td>
+                    break;
+
+
+
+
+            }
+
+
+        </tr>
+    </table>
+
+</div>
+
+
+    <div class="col-lg-12 col-12">
+       
+   
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-sm" style="font-size:15px;">
+
+            <tr style="background-color:#363637;color:#ffffff">
+                <td colspan="4">MAGNET CLUCTH DETAILS </td>
+
+            </tr>
+
+            @foreach (ModelNew modelnew in (ModelNew[])ViewBag.DetailMasterLevelI)
+            {
+                <tr>
+                    <td class="w-20 cus-text-head">Customer Name</td>
+                    <td class="cus-text-query">@modelnew.CustomerName</td>
+                    <td class="w-20 cus-text-head">Program Name</td>
+                    <td class="cus-text-query">@modelnew.ProgramName</td>
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Drawing#</td>
+                    <td class="cus-text-query">@modelnew.ModelDrawing</td>
+                    <td class="w-25 cus-text-head">Model Name</td>
+                    <td class="cus-text-query">@modelnew.ModelName</td>
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Classification</td>
+                    <td class="cus-text-query">@modelnew.Classification</td>
+                    <td class="w-25 cus-text-head">Other Info</td>
+                    <td class="cus-text-query">@modelnew.OtherInfo</td>
+
+                </tr>
+
+
+
+            }
+
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+            <tr style="background-color:#363637;color:#ffffff">
+                <td colspan="4">PART MODEL DETAILS</td>
+
+            </tr>
+
+            @foreach (ModelPart modelpart in (ModelPart[])ViewBag.DetailMasterLevelII)
+            {
+                <tr>
+                    <td class="w-25 cus-text-head">Drawing#</td>
+                    <td class="cus-text-query">@modelpart.NodeDrawing</td>
+                    <td class="w-25 cus-text-head">Model Name</td>
+                    <td class="cus-text-query">@modelpart.NodeModelName</td>
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Part Name</td>
+                    <td class="cus-text-query">@modelpart.NodePartName</td>
+                    <td class="w-25 cus-text-head">Info</td>
+                    <td class="cus-text-query">@modelpart.NodeOtherComment</td>
+
+                </tr>
+
+            }
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+            <tr style="background-color:#363637;color:#ffffff">
+                <td colspan="4">ASSIGNMENT DESCRIPTION</td>
+
+            </tr>
+            @foreach (ModelDepartJob modelJob in (ModelDepartJob[])ViewBag.ShowModelpartDataJob)
+            {
+
+                <tr>
+                    <td class="w-25 cus-text-head">Job Name</td>
+                    <td class="cus-text-query" colspan="3">@modelJob.DepartJobName</td>
+
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Code</td>
+                    <td class="cus-text-query">@modelJob.DepartJobActionEmpCode</td>
+                    <td class="w-25 cus-text-head">Name Incharge</td>
+                    <td class="cus-text-query">@modelJob.DepartJobActionName</td>
+
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">E-Mail</td>
+                    <td class="cus-text-query">@modelJob.DepartJobActionEmail</td>
+                    <td class="w-25 cus-text-head">Plan Date</td>
+                    <td class="cus-text-query">@modelJob.DepartJobDueDate</td>
+
+
+                </tr>
+
+                <tr>
+                    <td class="w-25 cus-text-head">Notice</td>
+                    <td class="cus-text-query" colspan="3">@modelJob.DepartJobActionComment</td>
+
+
+                </tr>
+
+
+                <tr>
+                    <td class="w-25 cus-text-head">PDF</td>
+                    <td class="cus-text-query" colspan="3"><a href="~/File/PDF/@modelJob.DepartJobActionDocumentPDF" target="_blank">@modelJob.DepartJobActionDocumentPDF</a></td>
+
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Excel</td>
+                    <td class="cus-text-query" colspan="3"><a href="~/File/Excel/@modelJob.DepartJobActionDocumentExcel" target="_blank">@modelJob.DepartJobActionDocumentExcel</a></td>
+
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Picture</td>
+                    <td class="cus-text-query" colspan="3"><a href="~/File/Picture/@modelJob.DepartJobActionImage" target="_blank">@modelJob.DepartJobActionImage</a></td>
+
+
+                </tr>
+                <tr>
+                    <td class="w-25 cus-text-head">Comment From Incharge</td>
+                    <td class="cus-text-query" colspan="3">@modelJob.DepartJobActionCommentUser</td>
+
+
+                </tr>
+                @*<tr>
+                    <td class="w-25 cus-text-head">Reject Comment</td>
+                    <td class="cus-text-query" colspan="3">@modelJob.DepartJobActionCommentReject</td>
+
+
+                </tr>*@
+
+            }
+
+
+        </table>
+
+    </div>
+        @*<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModal" style="border-radius:0px;">Inspect</button>*@
+
+            
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius:0px;">
+
+            <div class="d-flex justify-content-center">
+                <div class="modal-body">
+                    <table class="table table-bordered table-sm">
+
+                        <tr>
+                            <td class=" cus-text-head" align="center" valign="middle">Status</td>
+                            <td>
+                                <select id="sestatus" class="form-control form-control-sm">
+                                    <option value="2">Reject</option>
+                                    <option value="3">Approve</option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=" cus-text-head" align="center" valign="middle">Comment</td>
+                            <td><textarea name="textpost" value="" class="form-control " id="UseCom"></textarea></td>
+                        </tr>
+
+
+
+                    </table>
+                          
+                      
+                    <a href="#" class="btn btn-sm btn-outline-dark" id="btnComment" style="border-radius:0px;">save</a>
+                      
+                   
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+   <script>
+
+       $('#btnComment').click(function () {
+
+           var useCom = $('#UseCom').val();
+           var wherelist = @ViewBag.modelId;
+           var status = $('#sestatus').val();
+
+           var fileData = new FormData();
+           fileData.append('test',wherelist);
+           fileData.append('com',useCom);
+           fileData.append('status',status);
+
+           $.ajax({
+               url: '/Home/UpComment',
+               type: "POST",
+               contentType: false,
+               processData: false,
+               data: fileData,
+               success: function (result) {
+                   alert(result);
+                   window.location.reload();
+               },
+               error: function (err) {
+
+               }
+           });
+       });
+
+</script>
+
+
+
+
+
+                        

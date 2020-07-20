@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "ModelPart";
+}
+
+@using NewModelEx_S1.Models
+
+
+<div class="d-flex justify-content-center">
+
+    <div class="col-7 ">
+        <form method="post" action="/Home/EditModelDetail" class="needs-validation" novalidate>
+
+            <fieldset style="margin-top:10px;  ">
+                @foreach (ModelPart ModelEditPart in (ModelPart[])ViewBag.ShowEditModelpart)
+                {
+
+                    <div class="form-row">
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Drawing Mother Node</label>
+                            <input type="text" name="" value="@ViewData["drawingNumber"]" class=" form-control form-control-sm " id=" modelnamepost" disabled />
+                            <input type="text" name="KeyDrawing" value="@ViewData["drawingNumber"]" class=" form-control form-control-sm " id="modelnamepost" style="display:none" required />
+                            <input type="text" name="modelsubid" value="@ModelEditPart.SubId" class=" form-control form-control-sm " id="modelsubid" style="display:none" required />
+
+                            <div class="invalid-feedback">
+                                Please Input Model Name.
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Model Name</label>
+                            <input type="text" name="modelnamepost" value="@ModelEditPart.NodeModelName" class="form-control form-control-sm " id="modelnamepost" required />
+                            <div class="invalid-feedback">
+                                Please Input Model Name.
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Drawing #</label>
+                            <input type="text" name="drawingpost" value="@ModelEditPart.NodeDrawing" class="form-control form-control-sm " id="drawingnopost" required />
+                            <div class="invalid-feedback">
+                                Please Input Drawing Number.
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Parts Name</label>
+                            <input type="text" name="partnamepost" value="@ModelEditPart.NodePartName" class="form-control form-control-sm " id="partnamepost" required />
+                            <div class="invalid-feedback">
+                                Please input Part Name.
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-12 col-lg-6 col-md-6" style="padding-top:20px;">
+                            <label>Rev</label>
+                            <input type="text" name="revpost" value="@ModelEditPart.NodeRevision" class="form-control form-control-sm" id="revpost" />
+                        </div>
+
+                        <div class="col" style="padding-top:20px;">
+                            <label>Other Comment</label>
+                            <textarea name="textpost" value="" class="form-control " id="textpost">@ModelEditPart.NodeOtherComment</textarea>
+                        </div>
+
+                    </div>
+
+                    <br />
+
+                    <button type="submit" class="btn btn-sm btn-outline-dark">Submit</button>
+                    <br />
+                    <hr />
+                }
+            </fieldset>
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

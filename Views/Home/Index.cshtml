@@ -1,0 +1,163 @@
+﻿@using NewModelEx_S1.Models
+
+@{
+    
+    ViewBag.Title = "Index";
+}
+@{
+    var parameter = Request.QueryString["v"];
+
+    if (parameter == "1")
+    {
+
+
+
+        <script>alert("Record Successfully.");</script>
+
+
+
+    }
+
+}
+<ol class="breadcrumb " style="background-color :transparent;font-size:11px;">
+    <li class="breadcrumb-item" active" aria-current="page">Home</li>
+</ol>
+
+ 
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-9">
+
+            <a href="@Url.Action("AddNewModel", "Home" )"><i class='fas fa-plus' style="color:#0094ff"></i> </a>
+
+        </div>
+        <div class="col-lg-3">
+
+            <input type="text" name="name" value="" id="myInput" placeholder="search" class="form-control form-control-sm " />
+
+        </div>
+
+    </div>
+   
+</div>
+
+    <div class="col-lg-12">
+
+
+
+
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered table-sm table-hover" style="font-size:14px;margin-top:5px;" id="myTable">
+                <thead class="thead-dark">
+
+                    <tr>
+                        <th>Program Name</th>
+                        <th>Customer Name</th>
+                        <th align="center">Drawing#</th>
+                        <th>Model Name</th>
+                        <th>Part Name</th>
+
+                        <th>Date</th>
+                        <th>Classification</th>
+                        <th>Other Info</th>
+                        <th colspan="3"></th>
+
+                    </tr>
+
+                </thead>
+
+                @foreach (ModelNew modelnew in (ModelNew[])ViewData["showmodelnew"])
+                {
+                    <tr style="font-size:12px;">
+                        <td>@modelnew.ProgramName</td>
+                        <td>@modelnew.CustomerName</td>
+                        <td align="center">@modelnew.ModelDrawing</td>
+                        <td>@modelnew.ModelName</td>
+                        <td>@modelnew.PartName</td>
+
+                        <td>@modelnew.ModelDate</td>
+                        <td>@modelnew.Classification</td>
+                        <td>@modelnew.OtherInfo</td>
+                        <td align="center">
+                            <a href="@Url.Action("ModelDetial", "Home", new { id=@modelnew.ModelDrawing })"><i class='fas fa-pen' style="color:#000000"></i></a>
+                        </td>
+                        <td align="center">
+                            <a href="@Url.Action("EditNewModel", "Home", new { id = @modelnew.ModelDrawing })"><i class='fas fa-wrench' style="color:#000000"></i></a>
+                        </td>
+                        <td align="center">
+
+                            <i class='fas fa-trash' style="color:#000000" onclick="Checkdel(this);"></i>
+                        </td>
+
+
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+@*<script type="text/javascript" src="data:text/javascript;base64,ICBmdW5jdGlvbiBDaGVja2RlbChyKSB7DQoNCiAgICAgICAgICAgIHZhciBkZWwgPSBwcm9tcHQoIlBsZWFzZSBlbnRlciBEcmF3aW5nIE51bWJlciBjb25maXJtIGRlbGV0ZSAiLCAiIik7DQogICAgICAgICAgICB2YXIgaSA9IHIucGFyZW50Tm9kZS5wYXJlbnROb2RlLnJvd0luZGV4Ow0KICAgICAgICAgICAgdmFyIGVzdW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibXlUYWJsZSIpLnJvd3NbaV0uY2VsbHNbMl0uaW5uZXJIVE1MLnRyaW0oKTsNCiAgICAgICAgICAgIHZhciBqc28gPSB7IE1hc3RlcmtleTogZXN1bSB9Ow0KICAgICAgICAgICAgdmFyIHQgPSBKU09OLnN0cmluZ2lmeShqc28pOw0KDQogICAgICAgICAgICAvL2FsZXJ0KHQpOw0KDQogICAgICAgICAgICBpZiAoZGVsID09IGVzdW0pIHsNCg0KICAgICAgICAgICAgICAgIGlmICh0ICE9IG51bGwpIHsNCiAgICAgICAgICAgICAgICAgICAgLy8gYWxlcnQoZGVsKTsNCiAgICAgICAgICAgICAgICAgICAgJC5hamF4KHsNCiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU6ICdQT1NUJywNCiAgICAgICAgICAgICAgICAgICAgICAgIGRhdGFUeXBlOiAnanNvbicsDQogICAgICAgICAgICAgICAgICAgICAgICB1cmw6ICcvSG9tZS9OZXdNb2RlbERlbGV0ZScsDQogICAgICAgICAgICAgICAgICAgICAgICBkYXRhOiB7IG15SlNPTnM6IHQgfSwNCiAgICAgICAgICAgICAgICAgICAgICAgIC8vIGNvbnRlbnRUeXBlOiAnYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOCcsDQogICAgICAgICAgICAgICAgICAgICAgICBzdWNjZXNzOiBmdW5jdGlvbiAoZGF0YSkgew0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIGdldCB0aGUgcmVzdWx0IGFuZCBkbyBzb21lIG1hZ2ljIHdpdGggaXQNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBhbGVydChkYXRhKTsNCg0KDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgd2luZG93LmxvY2F0aW9uLnJlbG9hZCgpOw0KDQogICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgIH0pOw0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICBlbHNlIHsNCiAgICAgICAgICAgICAgICAgICAgYWxlcnQoIlNvbWUgdGhpbmcgIHdyb25nISEiKTsNCiAgICAgICAgICAgICAgICB9DQoNCiAgICAgICAgICAgIH0NCiAgICAgICAgICAgIGVsc2Ugew0KDQogICAgICAgICAgICAgICAgYWxlcnQoIldyb25nIEVudGVyIERyYXdpbmcgTnVtYmVyISIpOw0KICAgICAgICAgICAgfQ0KDQoNCiAgICAgICAgfQ=="></script>*@
+    @*<script>
+
+        function Checkdel(r) {
+
+            var del = prompt("Please enter Drawing Number confirm delete ", "");
+            var i = r.parentNode.parentNode.rowIndex;
+            var esum = document.getElementById("myTable").rows[i].cells[2].innerHTML.trim();
+            var jso = { Masterkey: esum };
+            var t = JSON.stringify(jso);
+
+            //alert(t);
+
+            if (del == esum) {
+
+                if (t != null) {
+                    // alert(del);
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/Home/NewModelDelete',
+                        data: { myJSONs: t },
+                        // contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            // get the result and do some magic with it
+                            alert(data);
+
+
+                            window.location.reload();
+
+                        }
+                    });
+                }
+                else {
+                    alert("Some thing  wrong!!");
+                }
+
+            }
+            else {
+
+                alert("Wrong Enter Drawing Number!");
+            }
+
+
+        }
+    </script>*@
+   
+
+@*<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>*@
+
+<script>
+    eval(function (p, a, c, k, e, d) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) { d[e(c)] = k[c] || e(c) } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('6 o(r){0 9=n("m l a 8 p q ","");0 i=r.7.7.v;0 4=k.u("s").w[i].h[2].f.d();0 5={e:4};0 t=j.g(5);c(9==4){c(t!=x){$.H({O:\'L\',J:\'P\',K:\'/M/N\',1:{I:t},B:6(1){3(1);A.z.y()}})}b{3("C D  G!!")}}b{3("F E a 8!")}}', 52, 52, 'var|data||alert|esum|jso|function|parentNode|Number|del|Drawing|else|if|trim|Masterkey|innerHTML|stringify|cells||JSON|document|enter|Please|prompt|Checkdel|confirm|delete||myTable||getElementById|rowIndex|rows|null|reload|location|window|success|Some|thing|Enter|Wrong|wrong|ajax|myJSONs|dataType|url|POST|Home|NewModelDelete|type|json'.split('|'), 0, {}))
+
+</script>

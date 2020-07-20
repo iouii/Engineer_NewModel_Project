@@ -1,0 +1,339 @@
+﻿<html>
+<head>
+    <title>Add Department and Position</title>
+    <style>
+        .card-header {
+            background-color: none;
+            text-align: center;
+            color: black;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-header alert-light float-left">
+            <h3>Add Depertment and Position</h3>
+        </div><br /><br /><br /><hr /><br />
+
+        <div class="card-body " style="margin-top:-40px;">
+            <!--Popup Update Edit Deparatmetn-->
+            <!-- Button trigger modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" type="text" id="txteditDatadepid" style="display:none;" />
+                            <input class="form-control" type="text" id="txteditDatadep" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnEditSave" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End popup Edit Deparatmetn-->
+            <!--Popup Update Edit Position-->
+            <!-- Button trigger modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="idPosition" tabindex="-1" role="dialog" aria-labelledby="idPosition" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" type="text" id="txteditDataPosid" style="display:none;" />
+                            <input class="form-control" type="text" id="txteditDataPos" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnEditSavePosition" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End popup Edit Position-->
+
+            <div class="form-row ">
+                <div class="form-group col-md-5 ">
+                    <input class="form-control float-right" type="text" id="txtDept" placeholder="AddDepartment" />
+                </div>
+                <div class="form-group col-md-1 ">
+                    <a class="btn btn-success float-right" onclick="AddDataDept()">Add</a>
+                </div>
+
+                <div class="form-group col-md-5 ">
+                    <input class="form-control float-right" type="text" id="txtPos" placeholder="AddPosition" />
+                </div>
+                <div class="form-group col-md-1">
+                    <a class="btn btn-success float-right" onclick="AddDataPos()">Add</a>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <div style="overflow-x:auto;">
+                        <table class="table table-bordered table-sm float-right" style="width:430px;font-size:14px;">
+                            <tr class="table thead-dark">
+                                <th scope="col">NO</th>
+                                <th scope="col">Department</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tbody id="TabelDept"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div style="overflow-x:auto;">
+                        <table class="table table-bordered table-sm float-right" style="width:430px;font-size:14px;">
+                            <tr class="table thead-dark">
+                                <th scope="col">NO</th>
+                                <th scope="col">Position</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tbody id="TabelPos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            SearchDepartment();
+            SearchPosition();
+        });
+
+
+        //Position  //
+        function AddDataPos() {
+
+            var posname = $("#txtPos").val();
+            if (posname != "" && posname != undefined) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/SaveDataPosition",
+                    datatype: "json",
+                    data: { jsonStr: posname },
+                    success: function (data) {
+                        alert(data);
+                        SearchPosition();
+                    }
+                });
+            } else {
+                alert("Please Fill data");
+
+            }
+        }
+
+        function EditDataPos(idPos, nPos) {
+            $("#txteditDataPos").val(nPos);
+            $("#txteditDataPosid").val(idPos);
+        }
+
+        function EditDataPosition() {
+
+                var PostId = $("#txteditDataPosid").val();
+                var PosName = $("#txteditDataPos").val();
+                var obj = { posid: PostId, posname: PosName };
+                var jsonStr = JSON.stringify(obj);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/EditDataPosition",
+                    datatype: "json",
+                    data: { jsonStr: jsonStr },
+                    success: function (data) {
+                        alert(data);
+                        $(function () {
+                            $("#idPosition").modal('toggle');
+
+                        });
+                        SearchPosition();
+                    }
+                });
+
+        }
+
+        $("#btnEditSavePosition").click(function () {
+            var PosName = $("#txteditDataPos").val();
+
+            if (PosName != "" && PosName != undefined) {
+                EditDataPosition();
+            } else {
+                alert("Plase Fill data");
+            }
+        });
+
+        function SearchPosition() {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddPos",
+                datatype: "json",
+                data: { data: '' },
+                success: function (data) {
+                    $("#TabelPos  tr").remove();
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                        + "<td class=''>" + item.idPos + "</td>"
+                        + "<td class=''>" + item.Position + "</td>"
+                        + "<td class='center'><button class='btn btn-warning' data-toggle='modal' data-target='#idPosition' onclick='EditDataPos("+item.idPos+",\""+item.Position+"\")'>Edit</button></td>"
+                        + "<td class='center'><button class='btn btn-danger' onclick='DeleteDataPos(" + item.idPos + ")'>Del</button></td>"
+                        + "</tr>";
+                        $('#TabelPos').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+
+        }
+        function DeleteDataPos(idPos) {
+            if (confirm("Are you sure delete data?") == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/DeleteDataPosition",
+                    datatype: "json",
+                    data: { jsonStr: idPos },
+                    success: function (data) {
+                        SearchPosition();
+                        alert(data);
+
+                    }
+                });
+            }
+        }
+        //Position End //
+
+
+        ///Department/////
+        function SearchDepartment() {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddDeptPos",
+                datatype: "json",
+                data: { data: '' },
+                success: function (data) {
+                    $("#TabelDept  tr").remove();
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                        + "<td class=''>" + item.idDept + "</td>"
+                        + "<td class=''>" + item.department + "</td>"
+                        + "<td class='center'><button class='btn btn-warning'   data-toggle='modal' data-target='#exampleModalCenter' onclick='EditDataDep(" + item.idDept + ",\"" + item.department + "\")' >Edit</button></td>"
+                        + "<td class='center'><button class='btn btn-danger'  onclick='DeleteDataDep(" + item.idDept + ")'>Del</button></td>"
+                        + "</tr>";
+                        $('#TabelDept').append(rows);
+                        //data-toggle='modal' data-target='#exampleModalCenter'
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+
+        }
+        function EditDataDep(idDep, nDept) {
+            $("#txteditDatadep").val(nDept);
+            $("#txteditDatadepid").val(idDep);
+        }
+
+        $("#btnEditSave").click(function () {
+            var DeptName = $("#txteditDatadep").val();
+
+            if (DeptName != "" && DeptName != undefined) {
+                EditDataDepartment();
+            } else {
+                alert("Plase Fill data");
+            }
+        });
+
+        function AddDataDept() {
+            var depname = $("#txtDept").val();
+            if (depname != "" && depname != undefined) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/SaveDataDepartment",
+                datatype: "json",
+                data: { jsonStr: depname },
+                success: function (data) {
+                    alert(data);
+                    SearchDepartment();
+            }
+            });
+        }else{
+                alert("Please Fill data");
+
+        }
+        }
+        function EditDataDepartment() {
+
+            var DeptId = $("#txteditDatadepid").val();
+            var DeptName = $("#txteditDatadep").val();
+            var obj = { depid: DeptId, depname: DeptName };
+            var jsonStr = JSON.stringify(obj);
+            $.ajax({
+                type: "POST",
+                url: "/Admin/EditDataDepartment",
+                datatype: "json",
+                data: { jsonStr: jsonStr },
+                success: function (data) {
+                    alert(data);
+                    $(function () {
+                        $("#exampleModalCenter").modal('toggle');
+                    });
+                    SearchDepartment();
+                }
+            });
+        }
+
+        function DeleteDataDep(idDep) {
+          if(confirm("Are you sure delete data?")==true){
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/DeleteDataDepartment",
+                    datatype: "json",
+                    data: { jsonStr: idDep },
+                    success: function (data) {
+                        alert(data);
+                        SearchDepartment();
+                }
+                });
+        }
+        }
+       ///Department End/////
+    </script>
+</body>
+</html>

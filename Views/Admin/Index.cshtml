@@ -1,0 +1,203 @@
+﻿@using NewModelEx_S1.Models;
+@{
+    ViewBag.Title = "Add User";
+}
+
+
+<html>
+<head>
+    <title>Add New User</title>
+    <style>
+        .card-header {
+            background-color: none;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-header alert-light float-left">
+            <h3>SEARCH USERS</h3>
+        </div><br /><br /><br />
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4">ID Employee</label>
+                    <input type="text" class="form-control" id="txtidEmpid" placeholder="Id">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4">Name</label>
+                    <input type="text" class="form-control" id="txtidName" placeholder="Name">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4">NickName</label>
+                    <input type="text" class="form-control" id="txtidnickname" placeholder="NickName">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Department</label>
+                    <select type="text" class="form-control" id="txtidDepartment" name="txtidDepartment" placeholder="">
+                        <option value="All">All</option>
+                        @if (ViewData["Department"] != null)
+                        {
+                            foreach (var listdepartment in (List<ModelDepartment>)ViewData["Department"])
+                            {
+                                <option value="@listdepartment.department">@listdepartment.department</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputState">Position</label>
+                    <select type="text" class="form-control" id="txtidPosition" name="txtidPosition" placeholder="">
+                        <option value="All">All</option>
+                        @if (ViewData["Position"] != null)
+                        {
+                            foreach (var listposition in (List<ModelPosition>)ViewData["Position"])
+                            {
+                                <option value="@listposition.Position">@listposition.Position</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <button class="btn btn-primary float-right" id="btnSave">SEARCH</button>
+                </div>
+            </div><hr />
+        </div>
+
+        <div class="card-body" style="margin-top:-40px;">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <a class="btn btn-success float-right" href="@Url.Action("AddUser","Admin")">Add User</a>
+                </div>
+                <div class="form-group col-md-12">
+                    <div style="overflow-x:auto;">
+                        <table class="table table-bordered table-sm " style="width:1250px;font-size:16px;" id="TabelUsers">
+                            <tr class="table thead-dark">
+                                <th scope="col">NO</th>
+                                <th scope="col">ID Employee</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">LastName</th>
+                                <th scope="col">NickName</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">PermissionUser</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tbody id="TabelUser"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+     $(document).ready(function () {
+         SearchData();
+     });
+     $("#btnSave").click(function () {
+         SearchData();
+     });
+     function SearchData() {
+         var getDataEmp, getDataName, getDataDepartment, getDataPosition,getNickname;
+         getDataEmp = $("#txtidEmpid").val();
+         getDataName = $("#txtidName").val();
+         getNickname = $("#txtidnickname").val();
+         getDataDepartment = $("#txtidDepartment").val();
+         getDataPosition = $("#txtidPosition").val();
+
+         if (getDataEmp == undefined) {
+             getDataEmp = "";
+         }
+         if (getDataDepartment == "All") {
+             getDataDepartment = "";
+         }
+         if (getDataPosition == "All") {
+             getDataPosition = "";
+         }
+
+         var ObjData = {
+             getDataEmps:getDataEmp,
+             getDataName:getDataName,
+             getNickname: getNickname,
+             getDataDepartments:getDataDepartment,
+             getDataPositions:getDataPosition
+         };
+         var Jsonstring = JSON.stringify(ObjData);
+         console.log(Jsonstring);
+
+         $.ajax({
+             type: "POST",
+             url: "/Admin/SearchDataUser",
+             datatype: "json",
+             data: { JsonData: Jsonstring },
+             success: function (data) {
+                 $("#TabelUser  tr").remove();
+                 var items = '';
+                 $.each(data, function (i, item) {
+                     var rows = "<tr>"
+                     + "<td class='prtoducttd'>" + (i+1) + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpId + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpFName + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpLName + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpNickName + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpDep + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpPos + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpEmail + "</td>"
+                     + "<td class='prtoducttd'>" + item.EmpPermission + "</td>"
+                     + "<td class='prtoducttd'><button class='btn btn-warning' onclick='EditDataUser("+item.EmpId+")'>Edit</button></td>"
+                     + "<td class='prtoducttd'><button class='btn btn-danger' onclick='DeleteData(" + item.EmpId + ")'>Del</button></td>"
+                     + "</tr>";
+                     $('#TabelUser').append(rows);
+                 });
+             },
+             error: function (ex) {
+                 var r = jQuery.parseJSON(response.responseText);
+                 alert("Message: " + r.Message);
+                 alert("StackTrace: " + r.StackTrace);
+                 alert("ExceptionType: " + r.ExceptionType);
+             }
+         });
+     }
+
+     function EditDataUser(idEmp) {
+             //$.ajax({
+             //type: "POST",
+             //url: "/Admin/EditUser",
+             //datatype: "json",
+             //data: { idEmp:idEmp },
+             //success: function (data) {
+                     location.href = "@Url.Action("EditUser", "Admin")?idEmps="+idEmp+"";
+         //    }
+         //});
+
+     }
+        function DeleteData(idEmp) {
+            if(confirm("Are you sure delete data ?")==true){
+             $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteDataUser",
+                datatype: "json",
+                data: { idEmp:idEmp },
+                success: function (data) {
+                 alert(data);
+                 SearchData();
+            }
+            });
+        }
+     }
+    </script>
+</body>
+</html>
